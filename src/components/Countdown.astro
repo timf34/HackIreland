@@ -1,0 +1,54 @@
+---
+const eventDate = new Date('2025-03-15T00:00:00').getTime();
+---
+
+<div class="countdown-container">
+    <h2 class="text-4xl font-bold mb-4">Time Remaining</h2>
+    <div class="grid grid-cols-4 gap-4">
+        <div class="countdown-item">
+            <span id="days" class="text-3xl font-bold">00</span>
+            <span class="text-sm">Days</span>
+        </div>
+        <div class="countdown-item">
+            <span id="hours" class="text-3xl font-bold">00</span>
+            <span class="text-sm">Hours</span>
+        </div>
+        <div class="countdown-item">
+            <span id="minutes" class="text-3xl font-bold">00</span>
+            <span class="text-sm">Minutes</span>
+        </div>
+        <div class="countdown-item">
+            <span id="seconds" class="text-3xl font-bold">00</span>
+            <span class="text-sm">Seconds</span>
+        </div>
+    </div>
+</div>
+
+<script define:vars={{ eventDate }}>
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+</script>
+
+<style>
+    .countdown-container {
+        @apply bg-gray-800 p-6 rounded-lg shadow-lg;
+    }
+    .countdown-item {
+        @apply flex flex-col items-center justify-center bg-gray-700 p-4 rounded-lg;
+    }
+</style>

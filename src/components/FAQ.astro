@@ -1,0 +1,59 @@
+---
+const faqs = [
+    {
+        question: "What is HackTrinity?",
+        answer: "HackTrinity is a 24-hour hackathon where participants work in teams to create innovative projects."
+    },
+    {
+        question: "Who can participate?",
+        answer: "HackTrinity is open to all students, regardless of their major or level of experience."
+    },
+    {
+        question: "Do I need to know how to code?",
+        answer: "While coding knowledge is helpful, it's not required. We welcome participants with diverse skills and backgrounds."
+    },
+    {
+        question: "Is there a registration fee?",
+        answer: "No, participation in HackTrinity is completely free!"
+    }
+];
+---
+
+<section id="faq" class="py-16 bg-gray-800">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+        <div class="space-y-4">
+            {faqs.map((faq, index) => (
+                    <div class="faq-item bg-gray-700 rounded-lg overflow-hidden">
+                        <button class="faq-question w-full text-left p-4 focus:outline-none" data-index={index}>
+                            <span class="font-semibold text-lg">{faq.question}</span>
+                            <span class="float-right transform transition-transform duration-200">▼</span>
+                        </button>
+                        <div class="faq-answer bg-gray-600 p-4 hidden">
+                            <p>{faq.answer}</p>
+                        </div>
+                    </div>
+                ))}
+        </div>
+    </div>
+</section>
+
+<script>
+    document.querySelectorAll('.faq-question').forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const arrow = question.querySelector('span:last-child');
+            answer.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        });
+    });
+</script>
+
+<style>
+    .faq-item {
+        @apply transition-all duration-200 ease-in-out;
+    }
+    .faq-question:hover {
+        @apply bg-gray-600;
+    }
+</style>

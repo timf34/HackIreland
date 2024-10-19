@@ -1,0 +1,54 @@
+---
+const sponsors = [
+    { name: "TechCorp", logo: "/api/placeholder/200/100" },
+    { name: "InnovateLabs", logo: "/api/placeholder/200/100" },
+    { name: "FutureTech", logo: "/api/placeholder/200/100" },
+    { name: "CodeMasters", logo: "/api/placeholder/200/100" },
+    { name: "Devolution", logo: "/api/placeholder/200/100" },
+];
+---
+
+<section id="sponsors" class="py-16 bg-gray-900">
+    <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-8 text-center">Our Sponsors</h2>
+        <div class="sponsor-carousel">
+            {sponsors.map((sponsor) => (
+                    <div class="sponsor-item">
+                        <img src={sponsor.logo} alt={sponsor.name} class="mx-auto" />
+                        <p class="text-center mt-2">{sponsor.name}</p>
+                    </div>
+                ))}
+                </div>
+                </div>
+                </section>
+
+                <script>
+                    import { tns } from "tiny-slider/src/tiny-slider";
+
+                    tns({
+                        container: '.sponsor-carousel',
+                        items: 1,
+                        slideBy: 'page',
+                        autoplay: true,
+                        autoplayButtonOutput: false,
+                        controls: false,
+                        nav: false,
+                        responsive: {
+                            640: {
+                                items: 2
+                            },
+                            768: {
+                                items: 3
+                            },
+                            1024: {
+                                items: 4
+                            }
+                        }
+                    });
+                    </script>
+
+                <style>
+                    .sponsor-item {
+                        @apply bg-gray-800 p-4 rounded-lg;
+                    }
+                </style>

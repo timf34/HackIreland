@@ -1,0 +1,88 @@
+---
+---
+
+<div id="cellular-automata" class="fixed inset-0 pointer-events-none"></div>
+
+<script>
+    class CellularAutomata {
+        constructor(width, height, cellSize) {
+            this.width = width;
+            this.height = height;
+            this.cellSize = cellSize;
+            this.cols = Math.floor(width / cellSize);
+            this.rows = Math.floor(height / cellSize);
+            this.grid = this.createGrid();
+        }
+
+        createGrid() {
+            return new Array(this.cols).fill(null)
+                .map(() => new Array(this.rows).fill(null)
+                    .map(() => Math.random() > 0.7));
+        }
+
+        nextGen() {
+            this.grid = this.grid.map((col, x) =>
+                col.map((cell, y) => {
+                    const neighbors = this.countNeighbors(x, y);
+                    return neighbors === 3 || (cell && neighbors === 2);
+                })
+            );
+        }
+
+        countNeighbors(x, y) {
+            let count = 0;
+            for (let i = -1; i <= 1; i++) {
+                for (let j = -1; j <= 1; j++) {
+                    if (i === 0 && j === 0) continue;
+                    const col = (x + i + this.cols) % this.cols;
+                    const row = (y + j + this.rows) % this.rows;
+                    if (this.grid[col][row]) count++;
+                }
+            }
+            return count;
+        }
+
+        draw(ctx) {
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            this.grid.forEach((col, x) =>
+                col.forEach((cell, y) => {
+                    if (cell) {
+                        ctx.fillRect(x * this.cellSize, y * this.cellSize, this.cellSize, this.cellSize);
+                    }
+                })
+            );
+        }
+    }
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('cellular-automata');
+    container.appendChild(canvas);
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const cellSize = 10;
+    const automata = new CellularAutomata(canvas.width, canvas.height, cellSize);
+
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        automata.draw(ctx);
+        automata.nextGen();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+
+<style>
+    #cellular-automata {
+        z-index: -1;
+        opacity: 0.2;
+    }
+</style>

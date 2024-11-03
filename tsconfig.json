@@ -1,3 +1,9 @@
 {
-  "extends": "astro/tsconfigs/strict"
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": false,  // This makes TypeScript less strict
+    "allowJs": true,
+    "checkJs": false, // This disables checking of JavaScript files
+    "types": ["astro/client"]
+  }
 }

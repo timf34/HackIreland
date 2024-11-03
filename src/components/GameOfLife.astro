@@ -36,7 +36,7 @@
             this.rows = 0;
             this.grid = [];
             this.lastUpdate = 0;
-            this.updateInterval = 300; // Update every 200ms (adjust this value to change speed)
+            this.updateInterval = 200; // Update every 200ms (adjust this value to change speed)
 
             this.resize();
             this.animate = this.animate.bind(this);
@@ -45,15 +45,67 @@
             window.addEventListener('resize', () => this.resize());
         }
 
+        private initializeGrid(): void {
+            // First create an empty grid
+            this.grid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(false));
+
+            // Add random "soup" with controlled density
+            const density = 0.3; // 30% initial fill rate
+            for (let x = 0; x < this.rows; x++) {
+                for (let y = 0; y < this.cols; y++) {
+                    if (Math.random() < density) {
+                        this.grid[x][y] = true;
+                    }
+                }
+            }
+
+            // Add some common Game of Life patterns at random positions
+            const patterns = [
+                // Glider
+                [[0,1,0], [0,0,1], [1,1,1]],
+
+                // Blinker
+                [[1,1,1]],
+
+                // Block
+                [[1,1], [1,1]],
+
+                // Beehive
+                [[0,1,1,0], [1,0,0,1], [0,1,1,0]],
+
+                // Loaf
+                [[0,1,1,0], [1,0,0,1], [0,1,0,1], [0,0,1,0]]
+            ];
+
+            // Add several patterns at random positions
+            for (let i = 0; i < 5; i++) {
+                const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+                const x = Math.floor(Math.random() * (this.rows - pattern.length));
+                const y = Math.floor(Math.random() * (this.cols - pattern[0].length));
+
+                this.addPattern(pattern, x, y);
+            }
+        }
+
+        private addPattern(pattern: number[][], startX: number, startY: number): void {
+            for (let x = 0; x < pattern.length; x++) {
+                for (let y = 0; y < pattern[x].length; y++) {
+                    if (pattern[x][y] === 1) {
+                        const newX = (startX + x) % this.rows;
+                        const newY = (startY + y) % this.cols;
+                        this.grid[newX][newY] = true;
+                    }
+                }
+            }
+        }
+
         resize(): void {
             this.canvas.width = window.innerWidth;
             this.canvas.height = window.innerHeight;
             this.cols = Math.ceil(this.canvas.width / this.cellSize);
             this.rows = Math.ceil(this.canvas.height / this.cellSize);
 
-            this.grid = Array(this.rows).fill(null).map(() =>
-                Array(this.cols).fill(null).map(() => Math.random() < 0.1)
-            );
+            this.initializeGrid(); // Use our new initialization method
         }
 
         countNeighbors(x: number, y: number): number {
@@ -117,7 +169,6 @@
         }
     }
 
-    // Initialize when the DOM is loaded
     window.addEventListener('load', () => {
         const canvas = document.getElementById('gameOfLife') as HTMLCanvasElement;
         if (canvas) new GameOfLife(canvas);

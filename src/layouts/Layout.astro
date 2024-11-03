@@ -1,5 +1,4 @@
 ---
-import CellularAutomata from '../components/CellularAutomata.astro';
 import Navbar from '../components/Navbar.astro'
 
 export interface Props {
@@ -20,19 +19,10 @@ const { title } = Astro.props;
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
 </head>
 <body>
-<div class="flex w-full flex-col items-center">
-	<Navbar />
-	<main
-		class:list={[
-			'flex flex-col items-center justify-between',
-			'px-4 sm:px-8 w-full flex flex-col items-center',
-		]}
-	>
+	<div class="content-wrapper">
 		<slot />
-	</main>
-</div>
-<CellularAutomata />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
 </body>
 </html>
 <style is:global>
@@ -48,5 +38,9 @@ const { title } = Astro.props;
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 		Bitstream Vera Sans Mono, Courier New, monospace;
+	}
+	.content-wrapper {
+		position: relative;
+		z-index: 10;
 	}
 </style>

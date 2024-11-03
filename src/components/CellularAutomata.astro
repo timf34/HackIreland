@@ -1,7 +1,7 @@
 ---
 ---
 
-<div id="cellular-automata" class="fixed inset-0 pointer-events-none"></div>
+<div id="cellular-automata" class="absolute inset-0 pointer-events-none z-0"></div>
 
 <script>
     class CellularAutomata {
@@ -12,6 +12,8 @@
             this.cols = Math.floor(width / cellSize);
             this.rows = Math.floor(height / cellSize);
             this.grid = this.createGrid();
+            this.frameCount = 0;
+            this.updateInterval = 10; // TODO: This looks worse initially then gets better. Need to find a better middle ground (i.e. than updating every frame)
         }
 
         createGrid() {
@@ -43,7 +45,7 @@
         }
 
         draw(ctx) {
-            ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
             this.grid.forEach((col, x) =>
                 col.forEach((cell, y) => {
                     if (cell) {
@@ -51,6 +53,14 @@
                     }
                 })
             );
+        }
+
+        update() {
+            this.frameCount++;
+            if (this.frameCount >= this.updateInterval) {
+                this.nextGen();
+                this.frameCount = 0;
+            }
         }
     }
 
@@ -73,7 +83,7 @@
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         automata.draw(ctx);
-        automata.nextGen();
+        automata.update();
         requestAnimationFrame(animate);
     }
 
@@ -82,7 +92,6 @@
 
 <style>
     #cellular-automata {
-        z-index: -1;
         opacity: 0.2;
     }
 </style>

@@ -1,25 +1,27 @@
+<!-- index.astro -->
 ---
 import Layout from '../layouts/Layout.astro';
 import Countdown from '../components/Countdown.astro';
 import About from '../components/About.astro';
 import FAQ from '../components/FAQ.astro';
+import CellularAutomata from '../components/CellularAutomata.astro';
 ---
 
 <Layout title="HackTrinity">
-	<main class="bg-gray-900 text-white min-h-screen">
-		<header class="py-20 text-center">
-			<h1 class="text-6xl font-bold mb-4">Hack Trinity</h1>
-			<p class="text-xl mb-8">Innovate. Create. Hack.</p>
-			<Countdown />
-		</header>
-
-		<About />
-		<FAQ />
-	</main>
+    <div class="relative min-h-screen z-0">
+        <!--<CellularAutomata />-->
+        <main class="relative z-10 min-h-screen flex flex-col items-center justify-center">
+            <header class="text-center">
+                <h1 class="text-6xl font-bold mb-4">Hack Trinity</h1>
+                <p class="text-xl mb-8">Innovate. Create. Hack.</p>
+                <Countdown />
+            </header>
+        </main>
+    </div>
 </Layout>
 
 <style>
-	main {
-		font-family: 'Courier New', Courier, monospace;
-	}
+    main {
+        font-family: 'Courier New', Courier, monospace;
+    }
 </style>

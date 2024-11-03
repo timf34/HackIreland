@@ -38,7 +38,6 @@ function ScrambleText({
     return (
         <p
             ref={setRef}
-            onMouseOver={replayOn ? replay : undefined}
             onFocus={replayOn ? replay : undefined}
             className={`body ${className}`}
         >

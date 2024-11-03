@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
     // Enable many frameworks to support all different kinds of components.
@@ -8,5 +9,6 @@ export default defineConfig({
         react({
             include: ['**/react/*'],
         }),
+        tailwind()
     ],
 });

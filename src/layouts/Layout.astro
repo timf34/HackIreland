@@ -59,21 +59,13 @@ import Navbar from '../components/Navbar.astro'
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-size: 50px 50px; /* Reduced from 100px to 50px for smaller boxes */
+		background-size: 50px 50px;
 		background-position-y: -9px;
+		mask-image: linear-gradient(to bottom, transparent, white 15%, white 85%, transparent);
 		z-index: -2;
 		pointer-events: none;
 		background-image:
 			linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
 			linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-		mask-image: radial-gradient(
-			ellipse at center,
-			white 40%,
-			rgba(255, 255, 255, 0.8) 50%,
-			rgba(255, 255, 255, 0.6) 60%,
-			rgba(255, 255, 255, 0.4) 70%,
-			rgba(255, 255, 255, 0.2) 80%,
-			transparent 90%
-		);
 	}
 </style>

@@ -36,13 +36,11 @@ function ScrambleText({
     };
 
     return (
-        <p
+        <span
             ref={setRef}
             onFocus={replayOn ? replay : undefined}
             className={`body ${className}`}
-        >
-            {text}
-        </p>
+        />
     );
 }
 

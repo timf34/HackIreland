@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import ScrambleText from '../components/ScrambleText.jsx';
 ---
 
 <Layout title="Welcome to Astro.">
@@ -34,10 +35,17 @@ import Card from '../components/Card.astro';
 			</defs>
 		</svg>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
+		<!--<p class="instructions">-->
+		<!--	To get started, open the directory <code>src/pages</code> in your project.<br />-->
+		<!--	<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.-->
+		<!--</p>-->
+		<ScrambleText
+			text="This is a scrambled text animation!"
+			settings={{ speed: 0.5 }}
+			className="custom-class"
+			client:load
+		/>
+
 		<ul role="list" class="link-card-grid">
 			<Card
 				href="https://docs.astro.build/"

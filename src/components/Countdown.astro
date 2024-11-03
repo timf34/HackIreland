@@ -57,7 +57,7 @@
 
 <script>
     function updateCountdown() {
-        const targetDate = new Date('2024-02-22T00:00:00').getTime();
+        const targetDate = new Date('2025-02-22T00:00:00').getTime();
 
         function update() {
             const now = new Date().getTime();
@@ -68,20 +68,37 @@
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.querySelector('.days').textContent = String(days).padStart(2, '0');
-            document.querySelector('.hours').textContent = String(hours).padStart(2, '0');
-            document.querySelector('.minutes').textContent = String(minutes).padStart(2, '0');
-            document.querySelector('.seconds').textContent = String(seconds).padStart(2, '0');
+            const daysEl = document.querySelector('.days');
+            const hoursEl = document.querySelector('.hours');
+            const minutesEl = document.querySelector('.minutes');
+            const secondsEl = document.querySelector('.seconds');
+
+            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
 
             if (distance < 0) {
                 clearInterval(interval);
-                document.getElementById('countdown').innerHTML = "Event has started!";
+                const countdownEl = document.getElementById('countdown');
+                if (countdownEl) countdownEl.innerHTML = "Event has started!";
             }
         }
 
         update();
         const interval = setInterval(update, 1000);
+
+        // Cleanup on page unload
+        return () => clearInterval(interval);
     }
 
+    // Run on initial load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateCountdown);
+    } else {
+        updateCountdown();
+    }
+
+    // Also run on view transitions
     document.addEventListener('astro:page-load', updateCountdown);
 </script>

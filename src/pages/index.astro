@@ -8,14 +8,16 @@ import Countdown from '../components/Countdown.astro';
 <Layout title="Hack Ireland">
 	<main>
 		<div class="hero-section">
-			<img
-				src="/HackTrinityWhiteTransparentShorter.svg"
-				alt="Hack Ireland Logo"
-				class="main-logo"
-			/>
+			<div class="logo-container">
+				<img
+					src="/high_res.svg"
+					alt="Hack Ireland Logo"
+					class="main-logo"
+				/>
+			</div>
 			<p class="tagline">
 				<ScrambleText
-					text="30 hours overnight. €20k in prizes. Ireland's premier student hackathon"
+					text="€25k in prizes. 30 hours overnight. Ireland's premier student hackathon."
 					settings={{ speed: 0.5 }}
 					client:load
 				/>
@@ -50,7 +52,7 @@ import Countdown from '../components/Countdown.astro';
 	}
 
 	body {
-		font-family:  monospace;
+		font-family: monospace;
 	}
 
 	.hero-section {
@@ -63,9 +65,19 @@ import Countdown from '../components/Countdown.astro';
 		margin-bottom: 1rem;
 	}
 
+	.logo-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		margin-bottom: 2rem;
+	}
+
 	.main-logo {
-		height: 400px;
-		margin-bottom: 2px;
+		max-width: 80%;  /* Ensures logo is responsive */
+		height: auto;    /* Maintains aspect ratio */
+		object-fit: contain;
+		object-position: center;
 	}
 
 	.tagline {
@@ -81,15 +93,6 @@ import Countdown from '../components/Countdown.astro';
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 		gap: 1.5rem;
 		padding: 1rem;
-	}
-
-	/* Keep your existing styles */
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
 	}
 
 	.link-card-grid {

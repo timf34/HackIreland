@@ -1,33 +1,33 @@
 ---
 const links = [
-    { href: '/', text: '/index' },
-    { href: '/about' },
-    { href: '/sponsors' },
-    { href: '/faq' }
+    {href: '/', text: '/index'},
+    {href: '/about'},
+    {href: '/sponsors'},
+    {href: '/faq'}
 ];
 
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="fixed z-50 w-full px-4" id="navbar">
-    <div class="flex w-full max-w-6xl mx-auto flex-row justify-between rounded-b-3xl border border-t-0 border-slate-200/20 bg-slate-900 p-2">
+<nav class="fixed z-50 w-full px-4 pt-4" id="navbar">
+    <div class="flex w-full max-w-6xl mx-auto flex-row justify-between rounded-3xl border border-gray-700/50 bg-black/80 backdrop-blur-sm p-2">
         {links.map((link) => (
-        <a
-            href={link.href}
-            class:list={[
-                'page-link px-1 py-2 font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 sm:px-4 text-xs xs:text-base',
-            {
-                'text-white !underline': currentPath === link.href,
-                '!text-sky-400': link.href === '/contact'
-            }
-            ]}
-            >
-            {link.text || link.href}
-        </a>
+                <a
+                        href={link.href}
+                        class:list={[
+                            'page-link px-1 py-2 font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 sm:px-4 text-xs xs:text-base',
+                            {
+                                'text-white !underline': currentPath === link.href,
+                                '!text-sky-400': link.href === '/contact'
+                            }
+                        ]}
+                >
+                    {link.text || link.href}
+                </a>
         ))}
     </div>
 </nav>
-<div class="h-16"></div>
+<div class="h-20"></div>
 
 <style>
     .current-page {

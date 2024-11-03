@@ -23,6 +23,8 @@
         private cols: number;
         private rows: number;
         private grid: boolean[][];
+        private lastUpdate: number;
+        private updateInterval: number;
 
         constructor(canvas: HTMLCanvasElement) {
             this.canvas = canvas;
@@ -33,6 +35,8 @@
             this.cols = 0;
             this.rows = 0;
             this.grid = [];
+            this.lastUpdate = 0;
+            this.updateInterval = 300; // Update every 200ms (adjust this value to change speed)
 
             this.resize();
             this.animate = this.animate.bind(this);
@@ -100,10 +104,14 @@
             }
         }
 
-        animate(): void {
-            if (performance.now() % 10 === 0) {
+        animate(timestamp: number): void {
+            // Update the game state at fixed intervals
+            if (timestamp - this.lastUpdate >= this.updateInterval) {
                 this.update();
+                this.lastUpdate = timestamp;
             }
+
+            // Draw every frame for smooth rendering
             this.draw();
             requestAnimationFrame(this.animate);
         }

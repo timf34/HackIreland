@@ -10,36 +10,36 @@ const currentPath = Astro.url.pathname;
 ---
 
 <nav class="fixed z-50 w-full px-4 pt-4" id="navbar">
-    <div class="flex w-full max-w-6xl mx-auto flex-row items-center justify-between rounded-3xl border border-gray-700/50 bg-black/80 backdrop-blur-sm p-2">
-        <a href="/" class="flex items-center">
+    <div class="flex w-full max-w-6xl mx-auto flex-row items-center justify-between rounded-3xl border border-gray-700/50 bg-black/80 backdrop-blur-sm py-1 px-4">
+        <a href="/" class="flex items-center h-14">
             <img
-                    src="/HackTrinityWhiteTransparent.svg"
+                    src="/HackTrinityWhiteTransparentShorter.svg"
                     alt="HackTrinity Logo"
-                    class="h-16 w-auto mr-4"
+                    class="h-32 w-auto object-contain"
             />
         </a>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-28 ml-8">
             {links.map((link) => (
-                    <a
-                            href={link.href}
-                            class:list={[
-                                'page-link px-1 py-2 font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 sm:px-4 text-xs xs:text-base',
-                                {
-                                    'text-white !underline': currentPath === link.href,
-                                    '!text-sky-400': link.href === '/contact'
-                                }
-                            ]}
-                    >
-                        {link.text || link.href}
-                    </a>
-            ))}
-        </div>
-    </div>
-</nav>
-<div class="h-20"></div>
+                <a
+                href={link.href}
+                class:list={[
+                    'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-lg transition-colors duration-200',
+                {
+                    'text-white !underline': currentPath === link.href,
+                    '!text-sky-400': link.href === '/contact'
+                }
+                ]}
+                >
+                {link.text || link.href}
+                </a>
+                ))}
+                </div>
+                </div>
+                </nav>
+                <div class="h-16"></div>
 
-<style>
-    .current-page {
-        @apply text-white !underline;
-    }
-</style>
+                <style>
+                    .current-page {
+                        @apply text-white !underline;
+                    }
+                </style>

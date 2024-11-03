@@ -1,4 +1,6 @@
 ---
+import ScrambleText from './ScrambleText.jsx';
+
 const links = [
     {href: '/', text: '/index'},
     {href: '/about'},
@@ -20,26 +22,37 @@ const currentPath = Astro.url.pathname;
         </a>
         <div class="flex items-center gap-28 ml-8">
             {links.map((link) => (
-                <a
-                href={link.href}
-                class:list={[
-                    'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-lg transition-colors duration-200',
-                {
-                    'text-white !underline': currentPath === link.href,
-                    '!text-sky-400': link.href === '/contact'
-                }
-                ]}
-                >
-                {link.text || link.href}
-                </a>
-                ))}
-                </div>
-                </div>
-                </nav>
-                <div class="h-16"></div>
+                    <a
+                            href={link.href}
+                            class:list={[
+                                'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-lg transition-colors duration-200',
+                                {
+                                    'text-white !underline': currentPath === link.href,
+                                    '!text-sky-400': link.href === '/contact'
+                                }
+                            ]}
+                    >
+                        <ScrambleText
+                                text={link.text || link.href}
+                                settings={{
+                                    speed: 0.2,
+                                    tick: 1,
+                                    scramble: 4,
+                                    seed: 0,
+                                    chance: 0.8,
+                                    playOnMount: false
+                                }}
+                                client:load
+                        />
+                    </a>
+            ))}
+        </div>
+    </div>
+</nav>
+<div class="h-16"></div>
 
-                <style>
-                    .current-page {
-                        @apply text-white !underline;
-                    }
-                </style>
+<style>
+    .current-page {
+        @apply text-white !underline;
+    }
+</style>

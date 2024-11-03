@@ -10,18 +10,19 @@ import Navbar from '../components/Navbar.astro'
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<Navbar />
-		<slot />
-	</body>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Astro description" />
+	<meta name="viewport" content="width=device-width" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="generator" content={Astro.generator} />
+	<title>{title}</title>
+</head>
+<body>
+<div class="bg-grid"></div>
+<Navbar />
+<slot />
+</body>
 </html>
 <style is:global>
 	:root {
@@ -49,5 +50,22 @@ import Navbar from '../components/Navbar.astro'
 			Bitstream Vera Sans Mono,
 			Courier New,
 			monospace;
+	}
+
+	/* Grid Background Styles */
+	.bg-grid {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-size: 100px 100px;
+		background-position-y: -9px;
+		mask-image: linear-gradient(to bottom, transparent, white 50px, white 90%, transparent);
+		z-index: -2;
+		pointer-events: none;
+		background-image:
+			linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+			linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 	}
 </style>

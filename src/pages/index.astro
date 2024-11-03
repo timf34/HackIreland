@@ -2,21 +2,26 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import ScrambleText from '../components/ScrambleText.jsx';
+import Countdown from '../components/Countdown.astro';
 ---
 
 <Layout title="Hack Ireland">
 	<main>
-		<h1>Hack <span class="text-gradient">Ireland</span></h1>
-		<!--<p class="instructions">-->
-		<!--	To get started, open the directory <code>src/pages</code> in your project.<br />-->
-		<!--	<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.-->
-		<!--</p>-->
-		<ScrambleText
-			text="This is a scrambled text animation!"
-			settings={{ speed: 0.5 }}
-			className="custom-class"
-			client:load
-		/>
+		<div class="hero-section">
+			<img
+				src="/HackTrinityWhiteTransparentShorter.svg"
+				alt="Hack Ireland Logo"
+				class="main-logo"
+			/>
+			<p class="tagline">
+				<ScrambleText
+					text="30 hours overnight. €20k in prizes. Ireland's premier student hackathon"
+					settings={{ speed: 0.5 }}
+					client:load
+				/>
+			</p>
+			<Countdown />
+		</div>
 
 		<ul role="list" class="link-card-grid">
 			<div class="card-grid">
@@ -29,15 +34,6 @@ import ScrambleText from '../components/ScrambleText.jsx';
 					body="This is the content of the second card."
 				/>
 			</div>
-
-			<style>
-				.card-grid {
-					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-					gap: 1.5rem;
-					padding: 1rem;
-				}
-			</style>
 		</ul>
 	</main>
 </Layout>
@@ -52,22 +48,42 @@ import ScrambleText from '../components/ScrambleText.jsx';
 		font-size: 20px;
 		line-height: 1.6;
 	}
-	.astro-a {
-		position: absolute;
-		top: -32px;
-		left: 50%;
-		transform: translatex(-50%);
-		width: 220px;
-		height: auto;
-		z-index: -1;
+
+	body {
+		font-family:  monospace;
 	}
-	h1 {
-		font-size: 4rem;
-		font-weight: 700;
-		line-height: 1;
+
+	.hero-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 60vh;
 		text-align: center;
-		margin-bottom: 1em;
+		margin-bottom: 1rem;
 	}
+
+	.main-logo {
+		height: 400px;
+		margin-bottom: 2px;
+	}
+
+	.tagline {
+		font-size: 1.5rem;
+		color: rgba(255, 255, 255, 0.9);
+		max-width: 600px;
+		margin: 0 auto 2rem;
+		line-height: 1.4;
+	}
+
+	.card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.5rem;
+		padding: 1rem;
+	}
+
+	/* Keep your existing styles */
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
@@ -75,24 +91,7 @@ import ScrambleText from '../components/ScrambleText.jsx';
 		background-size: 400%;
 		background-position: 0%;
 	}
-	.instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
-	.instructions code {
-		font-size: 0.8em;
-		font-weight: bold;
-		background: rgba(var(--accent-light), 12%);
-		color: rgb(var(--accent-light));
-		border-radius: 4px;
-		padding: 0.3em 0.4em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent-light));
-	}
+
 	.link-card-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));

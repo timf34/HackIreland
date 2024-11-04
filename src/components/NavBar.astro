@@ -11,21 +11,21 @@ const links = [
 const currentPath = Astro.url.pathname;
 ---
 
-<nav class="fixed z-50 w-full px-4 pt-4" id="navbar">
-    <div class="flex w-full max-w-6xl mx-auto flex-row items-center justify-between rounded-3xl border border-gray-700/50 bg-black/80 backdrop-blur-sm py-1 px-4">
-        <a href="/" class="flex items-center h-14">
+<nav class="fixed z-50 w-full px-2 sm:px-4 pt-2 sm:pt-4" id="navbar">
+    <div class="flex w-full max-w-6xl mx-auto flex-row items-center justify-between rounded-3xl border border-gray-700/50 bg-black/80 backdrop-blur-sm py-1 px-2 sm:px-4">
+        <a href="/" class="flex items-center h-10 sm:h-14 pl-3 sm:pl-2">
             <img
                     src="/HackIreleandWhiteTransparent.svg"
                     alt="HackTrinity Logo"
-                    class="h-10 w-auto object-contain"
+                    class="h-8 sm:h-10 w-auto object-contain"
             />
         </a>
-        <div class="flex items-center gap-28 ml-8">
+        <div class="flex items-center gap-3 sm:gap-28 ml-2 sm:ml-8">
             {links.map((link) => (
                     <a
                             href={link.href}
                             class:list={[
-                                'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-lg transition-colors duration-200',
+                                'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-xs sm:text-lg transition-colors duration-200',
                                 {
                                     'text-white !underline': currentPath === link.href,
                                     '!text-sky-400': link.href === '/contact'

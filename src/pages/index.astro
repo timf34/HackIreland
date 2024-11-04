@@ -18,14 +18,14 @@ import Countdown from '../components/Countdown.astro';
 			<p class="tagline">
 				<ScrambleText
 					text="€25k in prizes. 30 hours overnight. Ireland's premier student hackathon."
-					settings={{ speed: 0.5, scramble: 20 }}
+					settings={{ speed: 0.3, scramble: 10, step: 1.4, chance: 0.8}}
 					client:load
 				/>
 			</p>
 			<p class="date">
 				<ScrambleText
 					text="February 22nd - 23rd, 2025"
-					settings={{ speed: 0.2, scramble: 5}}
+					settings={{ speed: 0.2, scramble: 20, step: 1.05, overdrive: false, chance: 0.8}}
 					client:load
 				/>
 			</p>

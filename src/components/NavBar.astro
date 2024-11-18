@@ -6,7 +6,7 @@ const links = [
     {href: '/#about', text: '/about'},
     {href: '/#sponsors', text: '/sponsors'},
     {href: '/#faq', text: '/faq'},
-    {href: '#', text: '/apply', isApply: true}, // Modified apply link
+    {href: '#', text: '/apply', isApply: true},
 ];
 
 const currentPath = Astro.url.pathname;
@@ -26,10 +26,10 @@ const currentPath = Astro.url.pathname;
                     <a
                             href={link.href}
                             class:list={[
-                                'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-xs sm:text-lg transition-colors duration-200',
+                                'page-link font-mono no-underline underline-offset-2 hover:underline active:text-slate-300 text-xs sm:text-lg transition-colors duration-200',
+                                link.isApply ? 'text-purple-400 hover:text-purple-300' : 'text-slate-400 hover:text-slate-200',
                                 {
-                                    'text-white !underline': currentPath === link.href,
-                                    'text-purple-400 hover:text-purple-300': link.isApply
+                                    'text-white !underline': currentPath === link.href
                                 }
                             ]}
                             onclick={link.isApply ? 'window.openModal(); return false;' : undefined}
@@ -58,9 +58,17 @@ const currentPath = Astro.url.pathname;
     .current-page {
         @apply text-white !underline;
     }
+
+    /* Additional styles to ensure purple apply link */
+    .page-link.text-purple-400 span {
+        color: rgb(167 139 250); /* This is Tailwind's purple-400 color */
+    }
+
+    .page-link.text-purple-400:hover span {
+        color: rgb(196 181 253); /* This is Tailwind's purple-300 color */
+    }
 </style>
 
-<!--Temp script for the modal which pops up to say applications not open yet, come back soon!-->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const applyLink = document.querySelector('a[href="#"]');

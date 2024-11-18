@@ -90,23 +90,29 @@ import Card from './Card.astro';
 
     questions.forEach(question => {
         question.addEventListener('click', () => {
-            const answer = question.nextElementSibling;
+            const answer = question.nextElementSibling as HTMLElement;
             const isExpanded = question.getAttribute('aria-expanded') === 'true';
 
             // Close all other questions
             questions.forEach(q => {
                 if (q !== question) {
                     q.setAttribute('aria-expanded', 'false');
-                    q.nextElementSibling.style.maxHeight = '0';
+                    const sibling = q.nextElementSibling as HTMLElement;
+                    if (sibling) {
+                        sibling.style.maxHeight = '0';
+                    }
                 }
             });
 
             // Toggle current question
             question.setAttribute('aria-expanded', (!isExpanded).toString());
-            answer.style.maxHeight = !isExpanded ? `${answer.scrollHeight}px` : '0';
+            if (answer) {
+                answer.style.maxHeight = !isExpanded ? `${answer.scrollHeight}px` : '0';
+            }
         });
     });
 </script>
+
 
 <style>
     .faq-section {

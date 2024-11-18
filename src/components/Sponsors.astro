@@ -3,7 +3,6 @@
     <section class="sponsors-section">
         <h2 class="sponsors-title">Sponsors</h2>
         <div class="sponsors-grid">
-            <!-- Add your sponsor logos here -->
             <div class="sponsor-item">
                 <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
             </div>
@@ -20,9 +19,9 @@
 <style>
     .sponsors-fade {
         position: relative;
-        height: 150px;
-        margin-top: -150px;
-        background: linear-gradient(to bottom, transparent, #13151a);
+        height: 300px;
+        margin-top: -50px;
+        background: linear-gradient(to bottom, transparent, #13151a 90%);
         z-index: 1;
         pointer-events: none;
         width: 100vw;
@@ -41,12 +40,13 @@
         margin-right: -50vw;
         background: #13151a;
         z-index: 1;
+        margin-top: -50px; /* Pull up to connect with fade */
     }
 
     .sponsors-section {
-        max-width: 800px; /* Match your main content width */
+        max-width: 800px;
         margin: 0 auto;
-        padding: 4rem 1rem 8rem 1rem; /* Matching your main padding */
+        padding: 2rem 1rem 8rem 1rem; /* Reduced top padding */
     }
 
     .sponsors-title {

@@ -69,13 +69,22 @@ const currentPath = Astro.url.pathname;
     }
 </style>
 
+<!--Temp script for apply modal till we open apps-->
 <script>
+    declare global {
+        interface Window {
+            openModal: () => void;
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const applyLink = document.querySelector('a[href="#"]');
         if (applyLink) {
             applyLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                window.openModal?.();
+                if (window.openModal) {
+                    window.openModal();
+                }
             });
         }
     });

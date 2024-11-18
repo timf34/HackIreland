@@ -83,6 +83,13 @@
 </style>
 
 <script>
+    // Declare the openModal function type on the window object
+    declare global {
+        interface Window {
+            openModal: () => void;
+        }
+    }
+
     const modal = document.getElementById('modal');
     const closeButton = document.querySelector('.close-button');
 

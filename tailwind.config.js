@@ -5,4 +5,10 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  safelist: [
+    'text-purple-500',
+    'text-purple-400',
+    'hover:text-purple-400',
+    'hover:text-purple-300'
+  ],
 };

@@ -1,0 +1,139 @@
+---
+import Card from './Card.astro';
+---
+
+<section class="faq-section">
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+    <div class="faq-grid">
+        <Card title="FAQ">
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What is Hack Ireland?</span>
+                        <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        Hack Ireland is Ireland's premier student hackathon, bringing together students from across the country for 30 hours of innovation, coding, and creativity.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Who can participate?</span>
+                        <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        Any student currently enrolled in a third-level institution in Ireland is eligible to participate.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>What should I bring?</span>
+                        <svg class="arrow" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        Bring your laptop, charger, student ID, and any other hardware you plan to use. We'll provide food, drinks, and a comfortable hacking space.
+                    </div>
+                </div>
+            </div>
+        </Card>
+    </div>
+</section>
+
+<script>
+    const questions = document.querySelectorAll('.faq-question');
+
+    questions.forEach(question => {
+        question.addEventListener('click', () => {
+            const answer = question.nextElementSibling;
+            const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+            // Close all other questions
+            questions.forEach(q => {
+                if (q !== question) {
+                    q.setAttribute('aria-expanded', 'false');
+                    q.nextElementSibling.style.maxHeight = '0';
+                }
+            });
+
+            // Toggle current question
+            question.setAttribute('aria-expanded', (!isExpanded).toString());
+            answer.style.maxHeight = !isExpanded ? `${answer.scrollHeight}px` : '0';
+        });
+    });
+</script>
+
+<style>
+    .faq-section {
+        padding: 4rem 1rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .faq-title {
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        font-weight: bold;
+    }
+
+    .faq-container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .faq-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .faq-question {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.1rem;
+        text-align: left;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .faq-question:hover {
+        color: rgba(136, 58, 234, 0.8);
+    }
+
+    .arrow {
+        transition: transform 0.3s ease;
+    }
+
+    .faq-question[aria-expanded="true"] .arrow {
+        transform: rotate(180deg);
+    }
+
+    .faq-answer {
+        color: rgba(255, 255, 255, 0.8);
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease-out;
+        margin-bottom: 1rem;
+    }
+
+    .faq-grid {
+        display: grid;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+</style>

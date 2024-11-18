@@ -1,11 +1,12 @@
 ---
 import ScrambleText from './ScrambleText.jsx';
+import Modal from './Modal.astro';
 
 const links = [
     {href: '/#about', text: '/about'},
     {href: '/#sponsors', text: '/sponsors'},
     {href: '/#faq', text: '/faq'},
-    {href: '/apply'},
+    {href: '#', text: '/apply', isApply: true}, // Modified apply link
 ];
 
 const currentPath = Astro.url.pathname;
@@ -28,9 +29,10 @@ const currentPath = Astro.url.pathname;
                                 'page-link font-mono text-slate-400 no-underline underline-offset-2 hover:text-slate-200 hover:underline active:text-slate-300 text-xs sm:text-lg transition-colors duration-200',
                                 {
                                     'text-white !underline': currentPath === link.href,
-                                    'text-purple-400 hover:text-purple-300': link.href === '/apply'
+                                    'text-purple-400 hover:text-purple-300': link.isApply
                                 }
                             ]}
+                            onclick={link.isApply ? 'window.openModal(); return false;' : undefined}
                     >
                         <ScrambleText
                                 text={link.text || link.href}
@@ -49,6 +51,7 @@ const currentPath = Astro.url.pathname;
         </div>
     </div>
 </nav>
+<Modal />
 <div class="h-16"></div>
 
 <style>
@@ -56,3 +59,16 @@ const currentPath = Astro.url.pathname;
         @apply text-white !underline;
     }
 </style>
+
+<!--Temp script for the modal which pops up to say applications not open yet, come back soon!-->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const applyLink = document.querySelector('a[href="#"]');
+        if (applyLink) {
+            applyLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.openModal?.();
+            });
+        }
+    });
+</script>

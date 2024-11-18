@@ -1,0 +1,120 @@
+---
+---
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Applications not open yet, come back soon!</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal.active {
+        display: flex;
+        opacity: 1;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background: rgba(25, 27, 31, 0.95);
+        border: 1px solid rgba(136, 58, 234, 0.2);
+        border-radius: 1rem;
+        padding: 2rem;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        transform: translateY(-20px);
+        transition: transform 0.3s ease;
+    }
+
+    .modal.active .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 1rem;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 0;
+        margin: -1rem -0.5rem 0 0;
+        transition: color 0.3s ease;
+    }
+
+    .close-button:hover {
+        color: rgba(136, 58, 234, 1);
+    }
+
+    .modal-body {
+        text-align: center;
+    }
+
+    .modal-body p {
+        color: white;
+        font-size: 1.1rem;
+        margin: 0;
+    }
+</style>
+
+<script>
+    const modal = document.getElementById('modal');
+    const closeButton = document.querySelector('.close-button');
+
+    // Function to open modal
+    function openModal() {
+        modal?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to close modal
+    function closeModal() {
+        modal?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Close modal when clicking close button
+    closeButton?.addEventListener('click', closeModal);
+
+    // Close modal when clicking outside
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close modal when pressing Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal?.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    // Expose openModal function to window
+    window.openModal = openModal;
+</script>

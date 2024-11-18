@@ -1,52 +1,68 @@
-<div class="sponsors-fade"></div>
-<div class="sponsors-wrapper">
-    <section class="sponsors-section">
-        <h2 class="sponsors-title">Sponsors</h2>
-        <div class="sponsors-grid">
-            <div class="sponsor-item">
-                <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+---
+---
+
+<div class="sponsors-container">
+    <div class="gradient-top"></div>
+    <div class="sponsors-wrapper">
+        <section class="sponsors-section">
+            <h2 class="sponsors-title">Sponsors</h2>
+            <div class="sponsors-grid">
+                <div class="sponsor-item">
+                    <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+                </div>
+                <div class="sponsor-item">
+                    <img src="/IntercomLogoWhite.png" alt="Sponsor 2" />
+                </div>
+                <div class="sponsor-item">
+                    <img src="/IntercomLogoWhite.png" alt="Sponsor 3" />
+                </div>
             </div>
-            <div class="sponsor-item">
-                <img src="/IntercomLogoWhite.png" alt="Sponsor 2" />
-            </div>
-            <div class="sponsor-item">
-                <img src="/IntercomLogoWhite.png" alt="Sponsor 3" />
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
+    <div class="gradient-bottom"></div>
 </div>
 
 <style>
-    .sponsors-fade {
+    .sponsors-container {
         position: relative;
-        height: 300px;
-        margin-top: -50px;
-        background: linear-gradient(to bottom, transparent, #13151a 90%);
-        z-index: 1;
-        pointer-events: none;
         width: 100vw;
         left: 50%;
         right: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gradient-top {
+        position: relative;
+        height: 150px;
+        width: 100%;
+        background: linear-gradient(to bottom, transparent, #13151a);
+        z-index: 1;
+    }
+
+    .gradient-bottom {
+        position: relative;
+        height: 150px;
+        width: 100%;
+        background: linear-gradient(to top, transparent, #13151a);
+        z-index: 1;
     }
 
     .sponsors-wrapper {
         position: relative;
-        width: 100vw;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
+        width: 100%;
         background: #13151a;
-        z-index: 1;
-        margin-top: -50px; /* Pull up to connect with fade */
+        z-index: 2;
+        margin-top: -1px; /* Prevents any potential gap */
+        margin-bottom: -1px;
     }
 
     .sponsors-section {
         max-width: 800px;
         margin: 0 auto;
-        padding: 2rem 1rem 8rem 1rem; /* Reduced top padding */
+        padding: 4rem 1rem;
     }
 
     .sponsors-title {
@@ -95,6 +111,13 @@
 
         .sponsor-item {
             max-width: 150px;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .gradient-top,
+        .gradient-bottom {
+            height: 100px;
         }
     }
 </style>

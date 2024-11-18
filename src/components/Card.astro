@@ -1,10 +1,10 @@
 ---
 interface Props {
 	title: string;
-	body: string;
+	children: any;
 }
 
-const { title, body } = Astro.props;
+const { title, children } = Astro.props;
 ---
 
 <div class="card">
@@ -12,7 +12,7 @@ const { title, body } = Astro.props;
 	<div class="accent accent-right"></div>
 	<div class="content">
 		<h2>{title}</h2>
-		<p>{body}</p>
+		<p>{children}</p>
 		<slot />
 	</div>
 </div>

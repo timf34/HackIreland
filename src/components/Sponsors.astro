@@ -1,0 +1,94 @@
+<div class="sponsors-fade"></div>
+<section class="sponsors-section">
+    <div class="sponsors-content">
+        <h2 class="sponsors-title">Sponsors</h2>
+        <div class="sponsors-grid">
+            <!-- Add your sponsor logos here -->
+            <!-- Example placeholder for sponsor logos -->
+            <div class="sponsor-item">
+                <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+            </div>
+            <div class="sponsor-item">
+                <img src="/IntercomLogoWhite.png" alt="Sponsor 2" />
+            </div>
+            <div class="sponsor-item">
+                <img src="/IntercomLogoWhite.png" alt="Sponsor 3" />
+            </div>
+            <!-- Add more sponsor items as needed -->
+        </div>
+    </div>
+</section>
+
+<style>
+    .sponsors-fade {
+        position: relative;
+        height: 150px;
+        margin-top: -150px; /* Pull up to overlap with content above */
+        background: linear-gradient(to bottom, transparent, #13151a);
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .sponsors-section {
+        position: relative;
+        width: 100%;
+        background: #13151a; /* Match your website's background color */
+        padding: 4rem 0 8rem 0;
+        z-index: 1;
+    }
+
+    .sponsors-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .sponsors-title {
+        text-align: center;
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 4rem;
+        font-weight: bold;
+    }
+
+    .sponsors-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 3rem;
+        justify-items: center;
+        align-items: center;
+    }
+
+    .sponsor-item {
+        width: 100%;
+        max-width: 200px;
+        transition: transform 0.2s ease;
+    }
+
+    .sponsor-item:hover {
+        transform: scale(1.05);
+    }
+
+    .sponsor-item img {
+        width: 100%;
+        height: auto;
+        filter: brightness(0) invert(1); /* Makes images white */
+        opacity: 0.9;
+        transition: opacity 0.2s ease;
+    }
+
+    .sponsor-item img:hover {
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .sponsors-grid {
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+        }
+
+        .sponsor-item {
+            max-width: 150px;
+        }
+    }
+</style>

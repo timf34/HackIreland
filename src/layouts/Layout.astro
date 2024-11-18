@@ -66,11 +66,19 @@ import GameOfLife from '../components/GameOfLife.astro';
 		height: 100%;
 		background-size: 50px 50px;
 		background-position-y: -9px;
-		mask-image: linear-gradient(to bottom, transparent, white 15%, white 85%, transparent);
+		//mask-image: linear-gradient(to bottom, transparent, white 15%, white 85%, transparent);
+		mask-image: linear-gradient(
+			to bottom,
+			transparent,
+			white 15%,
+			white 65%,
+			transparent 90%
+		);
 		z-index: -2;
 		pointer-events: none;
 		background-image:
 			linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
 			linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+
 	}
 </style>

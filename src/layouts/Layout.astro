@@ -7,6 +7,8 @@ const { title } = Astro.props;
 
 import Navbar from '../components/NavBar.astro'
 import GameOfLife from '../components/GameOfLife.astro';
+import Footer from "../components/Footer.astro";
+
 ---
 
 <!doctype html>
@@ -27,6 +29,7 @@ import GameOfLife from '../components/GameOfLife.astro';
 	<GameOfLife />
 	<Navbar />
 	<slot />
+	<Footer />
 </body>
 </html>
 <style is:global>

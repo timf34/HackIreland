@@ -4,17 +4,18 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
 
 <footer class="footer">
     <div class="glitch-container">
+        <div class="separator-line"></div>
         <div class="scan-line"></div>
         <div class="footer-content">
             <div class="social-links">
                 <a href="https://www.instagram.com/hack.trinity/" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <Instagram className="icon" size={24} />
+                    <Instagram className="icon" size={32} />
                 </a>
                 <a href="https://www.linkedin.com/company/hack-trinity/" target="_blank" rel="noopener noreferrer" class="social-link">
-                    <Linkedin className="icon" size={24} />
+                    <Linkedin className="icon" size={32} />
                 </a>
                 <a href="mailto:team@hacktrinity.com" class="social-link">
-                    <Mail className="icon" size={24} />
+                    <Mail className="icon" size={32} />
                 </a>
             </div>
             <div class="credit">
@@ -27,12 +28,14 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
 <style>
     .footer {
         position: relative;
-        padding: 2rem 0;
-        margin-top: 4rem;
-        overflow: hidden;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        margin-top: 6rem;
         opacity: 0;
         transform: translateY(20px);
         transition: opacity 0.5s ease, transform 0.5s ease;
+        background: #13151a;
     }
 
     .footer.visible {
@@ -40,11 +43,28 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
         transform: translateY(0);
     }
 
+    .separator-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(136, 58, 234, 0.8) 20%,
+                rgba(136, 58, 234, 1) 50%,
+                rgba(136, 58, 234, 0.8) 80%,
+                transparent
+        );
+        box-shadow: 0 0 20px rgba(136, 58, 234, 0.4);
+    }
+
     .glitch-container {
         position: relative;
-        background: rgba(19, 21, 26, 0.9);
+        background: rgba(19, 21, 26, 0.95);
         backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(136, 58, 234, 0.2);
+        padding: 3rem 0;
     }
 
     .scan-line {
@@ -63,16 +83,17 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
     .footer-content {
         max-width: 800px;
         margin: 0 auto;
-        padding: 0 1rem;
+        padding: 0 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 2rem;
+        height: 100%;
     }
 
     .social-links {
         display: flex;
-        gap: 1.5rem;
+        gap: 2rem;
         align-items: center;
     }
 
@@ -80,6 +101,7 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
         color: rgba(255, 255, 255, 0.8);
         transition: all 0.3s ease;
         position: relative;
+        padding: 0.5rem;
     }
 
     .social-link:hover {
@@ -104,8 +126,8 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
     }
 
     .credit {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
     }
 
     .glitch-text {
@@ -203,24 +225,17 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
         .footer-content {
             flex-direction: column;
             text-align: center;
-            gap: 1.5rem;
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .footer {
+            margin-top: 4rem;
         }
     }
 </style>
 
 <script>
-    function isInViewport(element) {
-        const rect = element.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
-    }
-
-    const footer = document.querySelector('.footer');
-
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -229,6 +244,7 @@ import { Instagram, Linkedin, Mail } from 'lucide-react';
         });
     }, { threshold: 0.1 });
 
+    const footer = document.querySelector('.footer');
     if (footer) {
         observer.observe(footer);
     }

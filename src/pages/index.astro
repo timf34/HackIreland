@@ -59,9 +59,9 @@ import FAQ from '../components/FAQ.astro';
 <style>
 	main {
 		margin: auto;
-		padding: 1rem;
+		padding: 0.5rem; /* Reduced padding for small screens */
 		width: 800px;
-		max-width: calc(100% - 2rem);
+		max-width: 100%; /* Changed from calc(100% - 2rem) */
 		color: white;
 		font-size: 20px;
 		line-height: 1.6;
@@ -113,15 +113,50 @@ import FAQ from '../components/FAQ.astro';
 
 	.card-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		grid-template-columns: 1fr; /* Changed from repeat(auto-fit) */
 		gap: 1.5rem;
-		padding: 1rem;
+		padding: 0.5rem; /* Reduced padding for small screens */
+		width: 100%;
+		max-width: 800px;
+		margin: 0 auto;
 	}
 
 	.link-card-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 2rem;
+		grid-template-columns: 1fr; /* Changed from repeat(auto-fit) */
+		gap: 1.5rem;
 		padding: 0;
+		width: 100%;
+	}
+
+	/* Add responsive text sizes */
+	@media (max-width: 640px) {
+		.tagline {
+			font-size: 1.2rem;
+			padding: 0 0.5rem;
+		}
+
+		.date {
+			font-size: 1rem;
+		}
+
+		main {
+			font-size: 16px;
+		}
+	}
+
+	/* Additional small screen adjustments */
+	@media (max-width: 350px) {
+		main {
+			padding: 0.25rem;
+		}
+
+		.card-grid {
+			padding: 0.25rem;
+		}
+
+		.tagline {
+			font-size: 1rem;
+		}
 	}
 </style>

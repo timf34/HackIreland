@@ -1,10 +1,9 @@
 <div class="sponsors-fade"></div>
-<section class="sponsors-section">
-    <div class="sponsors-content">
+<div class="sponsors-wrapper">
+    <section class="sponsors-section">
         <h2 class="sponsors-title">Sponsors</h2>
         <div class="sponsors-grid">
             <!-- Add your sponsor logos here -->
-            <!-- Example placeholder for sponsor logos -->
             <div class="sponsor-item">
                 <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
             </div>
@@ -14,33 +13,40 @@
             <div class="sponsor-item">
                 <img src="/IntercomLogoWhite.png" alt="Sponsor 3" />
             </div>
-            <!-- Add more sponsor items as needed -->
         </div>
-    </div>
-</section>
+    </section>
+</div>
 
 <style>
     .sponsors-fade {
         position: relative;
         height: 150px;
-        margin-top: -150px; /* Pull up to overlap with content above */
+        margin-top: -150px;
         background: linear-gradient(to bottom, transparent, #13151a);
         z-index: 1;
         pointer-events: none;
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
     }
 
-    .sponsors-section {
+    .sponsors-wrapper {
         position: relative;
-        width: 100%;
-        background: #13151a; /* Match your website's background color */
-        padding: 4rem 0 8rem 0;
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        background: #13151a;
         z-index: 1;
     }
 
-    .sponsors-content {
-        max-width: 1200px;
+    .sponsors-section {
+        max-width: 800px; /* Match your main content width */
         margin: 0 auto;
-        padding: 0 2rem;
+        padding: 4rem 1rem 8rem 1rem; /* Matching your main padding */
     }
 
     .sponsors-title {
@@ -72,7 +78,7 @@
     .sponsor-item img {
         width: 100%;
         height: auto;
-        filter: brightness(0) invert(1); /* Makes images white */
+        filter: brightness(0) invert(1);
         opacity: 0.9;
         transition: opacity 0.2s ease;
     }

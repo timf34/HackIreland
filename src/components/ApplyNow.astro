@@ -1,0 +1,45 @@
+---
+---
+
+<button class="apply-button" onclick="window.openModal()">
+    <span class="button-text">Apply Now</span>
+</button>
+
+<style>
+    .apply-button {
+        --radius: 1.3em;
+        position: relative;
+        padding: 0.8em 2.2em;
+        font-size: 1.2rem;
+        font-family: monospace;
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius);
+        backdrop-filter: blur(7px);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 2rem 0;
+        box-shadow: 
+            -15px 0 20px rgba(249, 81, 210, 0.1),  /* Hot pink on the left */
+            0 0 25px rgba(172, 51, 203, 0.2),      /* Medium orchid in the middle */
+            15px 0 20px rgba(136, 58, 234, 0.3);   /* Purple on the right */
+    }
+
+    .apply-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 
+            -15px 0 20px rgba(249, 81, 210, 0.2),  /* Hot pink on the left */
+            0 0 25px rgba(172, 51, 203, 0.3),      /* Medium orchid in the middle */
+            15px 0 20px rgba(136, 58, 234, 0.4);   /* Purple on the right */
+    }
+
+    .apply-button:active {
+        transform: translateY(0px);
+    }
+
+    .button-text {
+        position: relative;
+        z-index: 1;
+    }
+</style>

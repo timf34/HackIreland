@@ -19,7 +19,10 @@ import { FaInstagram } from 'react-icons/fa';
                 </a>
             </div>
             <div class="credit">
-                © 2024 Hack Ireland
+                <div class="copyright">© 2024 Hack Ireland</div>
+                <div class="built-by">
+                    <i>Built by <a href="https://github.com/timf34/HackTrinity" target="_blank" rel="noopener noreferrer">Tim</a></i>
+                </div>
             </div>
         </div>
     </div>
@@ -103,6 +106,29 @@ import { FaInstagram } from 'react-icons/fa';
     .credit {
         color: rgba(255, 255, 255, 0.9);
         font-size: 1.1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .copyright {
+        font-size: 1.1rem;
+    }
+
+    .built-by {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .built-by a {
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .built-by a:hover {
+        color: rgba(136, 58, 234, 1);
     }
 
     @media (max-width: 640px) {

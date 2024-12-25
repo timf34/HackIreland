@@ -89,7 +89,7 @@ import ApplyNow from '../components/ApplyNow.astro';
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-		margin-bottom: 2rem;
+		margin-bottom: 1rem;
 	}
 
 	.main-logo {
@@ -110,7 +110,7 @@ import ApplyNow from '../components/ApplyNow.astro';
 	.date {
 		font-size: 1.2rem;
 		color: rgba(255, 255, 255, 0.9);
-		margin: 0 auto 1rem; /* Added margin-bottom of 1rem */
+		margin: 0 auto 0.5rem; /* Reduced from 1rem to 0.5rem */
 	}
 
 	.card-grid {
@@ -160,5 +160,10 @@ import ApplyNow from '../components/ApplyNow.astro';
 		.tagline {
 			font-size: 1rem;
 		}
+	}
+
+	/* Reduce margin around the countdown component */
+	:global(.countdown-container) {
+		margin: 1rem 0; /* Reduced from 2rem to 1rem */
 	}
 </style>

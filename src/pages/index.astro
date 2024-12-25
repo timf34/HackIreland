@@ -6,6 +6,7 @@ import Countdown from '../components/Countdown.astro';
 import Sponsors from '../components/Sponsors.astro';
 import FAQ from '../components/FAQ.astro';
 import ApplyNow from '../components/ApplyNow.astro';
+// import HackerTerminal from '../components/HackerTerminal.astro';
 ---
 
 <Layout title="Hack Ireland">
@@ -27,7 +28,7 @@ import ApplyNow from '../components/ApplyNow.astro';
 			</p>
 			<p class="date">
 				<ScrambleText
-					text="February 22nd - 23rd, 2025"
+					text="Dogpatch Labs, CHQ Building - February 22nd to 23rd, 2025"
 					settings={{ speed: 0.2, scramble: 20, step: 1.05, overdrive: false, chance: 0.8}}
 					client:load
 				/>
@@ -35,6 +36,8 @@ import ApplyNow from '../components/ApplyNow.astro';
 			<Countdown />
 			<ApplyNow />
 		</div>
+
+		<!-- <HackerTerminal /> -->
 
 		<ul role="list" class="link-card-grid">
 			<div class="card-grid" id="about">

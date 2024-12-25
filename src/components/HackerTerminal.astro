@@ -1,0 +1,159 @@
+---
+---
+
+<div class="terminal-container">
+    <div class="terminal-header">
+        <div class="terminal-buttons">
+            <span class="terminal-button red"></span>
+            <span class="terminal-button yellow"></span>
+            <span class="terminal-button green"></span>
+        </div>
+        <div class="terminal-title">prizes.sh</div>
+    </div>
+    <div class="terminal-body">
+        <div class="line">
+            <span class="prompt">$</span>
+            <span class="command">cat prizes.txt</span>
+        </div>
+        <div class="output">
+            <div class="prize">🥇 First Place: €10,000</div>
+            <div class="prize">🥈 Second Place: €7,500</div>
+            <div class="prize">🥉 Third Place: €5,000</div>
+            <div class="prize">🎯 Category Prizes: €2,500</div>
+        </div>
+        <div class="line typing">
+            <span class="prompt">$</span>
+            <span class="command"></span>
+            <span class="cursor">█</span>
+        </div>
+    </div>
+</div>
+
+<style>
+    .terminal-container {
+        position: relative;
+        padding: 1.4em;
+        backdrop-filter: blur(7px);
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 1.3em;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 600px;
+        margin: 2rem auto;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .terminal-container:hover {
+        box-shadow: 0 0 30px rgba(136, 58, 234, 0.4);
+    }
+
+    .terminal-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .terminal-buttons {
+        display: flex;
+        gap: 8px;
+    }
+
+    .terminal-button {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    .terminal-container:hover .terminal-button {
+        transform: scale(1.2);
+    }
+
+    .red { background: #ff5f56; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #27c93f; }
+
+    .terminal-title {
+        color: white;
+        margin-left: 20px;
+        font-family: monospace;
+        opacity: 0.8;
+    }
+
+    .terminal-body {
+        font-family: monospace;
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .line {
+        margin: 10px 0;
+        display: flex;
+        gap: 10px;
+    }
+
+    .prompt {
+        color: #883aea;
+    }
+
+    .command {
+        color: white;
+    }
+
+    .output {
+        margin: 10px 0 20px 20px;
+    }
+
+    .prize {
+        margin: 8px 0;
+        line-height: 1.4;
+    }
+
+    .cursor {
+        animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+
+    @media (max-width: 640px) {
+        .terminal-container {
+            margin: 1rem;
+        }
+    }
+</style>
+
+<script>
+    // Typing animation
+    const commands = [
+        'echo "Ready to win?"',
+        'cat total_prize_pool.txt',
+        'echo "€25,000 in prizes"',
+        './apply_now.sh'
+    ];
+
+    document.addEventListener('astro:page-load', () => {
+        let currentCommand = 0;
+        const commandElement = document.querySelector('.typing .command');
+        
+        if (!commandElement) return;
+
+        function typeCommand(command: string, index: number = 0) {
+            if (index < command.length) {
+                commandElement.textContent = command.substring(0, index + 1);
+                setTimeout(() => typeCommand(command, index + 1), 100);
+            } else {
+                setTimeout(() => {
+                    commandElement.textContent = '';
+                    currentCommand = (currentCommand + 1) % commands.length;
+                    typeCommand(commands[currentCommand]);
+                }, 2000);
+            }
+        }
+
+        typeCommand(commands[0]);
+    });
+</script> 

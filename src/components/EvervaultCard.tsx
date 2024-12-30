@@ -1,3 +1,5 @@
+// Inspired by https://ui.aceternity.com/components/evervault-card
+
 import { useMotionValue, useMotionTemplate, motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { cn } from "../lib/utils";

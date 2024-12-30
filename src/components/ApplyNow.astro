@@ -4,7 +4,16 @@ import { EvervaultCard } from './EvervaultCard';
 
 <button class="apply-button" onclick="window.openModal()">
     <div class="scramble-overlay">
-        <EvervaultCard client:load />
+        <EvervaultCard 
+            radiusSize={350}
+            fontSize="10px"
+            lineHeight="10px"
+            textUpdateRate={100}
+            baseTextLength={100}
+            textMultiplier={2}
+            gradientStyle="white 10%, rgba(255, 255, 255, 0.5) 35%, transparent 70%"
+            client:load 
+        />
     </div>
     <span class="button-text">Apply Now</span>
 </button>
@@ -68,7 +77,6 @@ import { EvervaultCard } from './EvervaultCard';
 </style>
 
 <script>
-    // Add window.openModal function for the click handler
     window.openModal = () => {
         // Your existing modal opening logic here
     };

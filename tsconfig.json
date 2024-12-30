@@ -1,9 +1,16 @@
 {
   "compilerOptions": {
-    "noEmit": true,
-    "strict": false,  // This makes TypeScript less strict
-    "allowJs": true,
-    "checkJs": false, // This disables checking of JavaScript files
-    "types": ["astro/client"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["astro/client"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   }
 }

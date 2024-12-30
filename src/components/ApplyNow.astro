@@ -1,7 +1,11 @@
 ---
+import { EvervaultCard } from './EvervaultCard';
 ---
 
 <button class="apply-button" onclick="window.openModal()">
+    <div class="scramble-overlay">
+        <EvervaultCard client:load />
+    </div>
     <span class="button-text">Apply Now</span>
 </button>
 
@@ -25,6 +29,10 @@
             -15px 0 20px rgba(249, 81, 210, 0.1),  /* Hot pink on the left */
             0 0 25px rgba(172, 51, 203, 0.2),      /* Medium orchid in the middle */
             15px 0 20px rgba(136, 58, 234, 0.3);   /* Purple on the right */
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .apply-button:hover {
@@ -41,6 +49,26 @@
 
     .button-text {
         position: relative;
+        z-index: 2;
+    }
+
+    .scramble-overlay {
+        position: absolute;
+        inset: -1px;
         z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        border-radius: var(--radius);
+    }
+
+    .apply-button:hover .scramble-overlay {
+        opacity: 0.3;
     }
 </style>
+
+<script>
+    // Add window.openModal function for the click handler
+    window.openModal = () => {
+        // Your existing modal opening logic here
+    };
+</script>

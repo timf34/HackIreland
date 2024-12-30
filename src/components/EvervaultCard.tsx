@@ -1,5 +1,8 @@
 // Inspired by https://ui.aceternity.com/components/evervault-card
 
+// TODO: Make this more efficient so it works across the larger Sponsors section! 
+//  Think of what John Carmack might do! Should ideally only render within the radius of the mouse I guess, and slightly beyond it. 
+
 import { useMotionValue, useMotionTemplate, motion } from "framer-motion";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { cn } from "../lib/utils";

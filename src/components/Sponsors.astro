@@ -5,12 +5,18 @@ import { EvervaultCard } from './EvervaultCard';
 <div class="sponsors-container">
     <div class="gradient-top"></div>
     <div class="sponsors-wrapper">
+        <!-- TODO: Make this work! We need to make it more efficient... I'll come back to this later and think through it -->
+        <!-- <div class="scramble-container">
+            <div class="scramble-overlay">
+                <EvervaultCard 
+                    radiusSize={400}
+                    client:load 
+                />
+            </div>
+        </div> -->
         <section class="sponsors-section">
             <h2 class="sponsors-title">Sponsors</h2>
             <div class="sponsors-content">
-                <div class="scramble-overlay">
-                    <EvervaultCard radiusSize={150} client:load />
-                </div>
                 <div class="sponsors-grid">
                     <div class="sponsor-item">
                         <a href="https://www.intercom.com/careers" target="_blank">
@@ -86,15 +92,12 @@ import { EvervaultCard } from './EvervaultCard';
         margin-bottom: -1px;
     }
 
-    .sponsors-section {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 4rem 1rem;
-    }
-
-    .sponsors-content {
-        position: relative;
-        min-height: 400px;
+    .scramble-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        overflow: hidden;
     }
 
     .scramble-overlay {
@@ -105,8 +108,21 @@ import { EvervaultCard } from './EvervaultCard';
         transition: opacity 0.3s ease;
     }
 
-    .sponsors-content:hover .scramble-overlay {
+    .sponsors-wrapper:hover .scramble-overlay {
         opacity: 0.25;
+    }
+
+    .sponsors-section {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 4rem 1rem;
+        z-index: 2;
+    }
+
+    .sponsors-content {
+        position: relative;
+        min-height: 400px;
     }
 
     .sponsors-title {

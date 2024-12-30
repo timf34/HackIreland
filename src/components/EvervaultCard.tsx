@@ -8,9 +8,11 @@ import { generateRandomString } from "../lib/utils";
 export const EvervaultCard = ({
   text,
   className,
+  radiusSize = 250,
 }: {
   text?: string;
   className?: string;
+  radiusSize?: number;
 }) => {
   let mouseX = useMotionValue(0);
   let mouseY = useMotionValue(0);
@@ -18,16 +20,18 @@ export const EvervaultCard = ({
   const [randomString, setRandomString] = useState("");
  
   useEffect(() => {
-    let str = generateRandomString(1500);
+    let str = generateRandomString(20000);
     setRandomString(str);
   }, []);
  
   function onMouseMove({ currentTarget, clientX, clientY }: any) {
-    let { left, top } = currentTarget.getBoundingClientRect();
-    mouseX.set(clientX - left);
-    mouseY.set(clientY - top);
+    const rect = currentTarget.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    mouseX.set(x);
+    mouseY.set(y);
  
-    const str = generateRandomString(1500);
+    const str = generateRandomString(20000);
     setRandomString(str);
   }
  
@@ -37,34 +41,33 @@ export const EvervaultCard = ({
         "absolute inset-0 bg-transparent",
         className
       )}
+      onMouseMove={onMouseMove}
     >
-      <div
-        onMouseMove={onMouseMove}
-        className="w-full h-full relative overflow-hidden bg-transparent"
-      >
-        <CardPattern
-          mouseX={mouseX}
-          mouseY={mouseY}
-          randomString={randomString}
-        />
-      </div>
+      <CardPattern
+        mouseX={mouseX}
+        mouseY={mouseY}
+        randomString={randomString}
+        radiusSize={radiusSize}
+      />
     </div>
   );
 };
 
-function CardPattern({ mouseX, mouseY, randomString }: any) {
-  let maskImage = useMotionTemplate`radial-gradient(250px at ${mouseX}px ${mouseY}px, white, transparent)`;
+function CardPattern({ mouseX, mouseY, randomString, radiusSize }: any) {
+  let maskImage = useMotionTemplate`radial-gradient(${radiusSize}px at ${mouseX}px ${mouseY}px, white, transparent)`;
   let style = { maskImage, WebkitMaskImage: maskImage };
  
   return (
-    <div className="pointer-events-none absolute inset-0">
+    <div className="pointer-events-none absolute inset-0 w-full h-full">
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-100 mix-blend-overlay transition duration-500"
+        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-100 mix-blend-overlay transition duration-500 w-full h-full"
         style={style}
       >
-        <p className="absolute inset-x-0 text-[8px] h-full break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500 overflow-hidden">
-          {randomString}
-        </p>
+        <div className="absolute inset-0 w-full h-full">
+          <p className="text-[10px] leading-[10px] break-words whitespace-pre-wrap text-white font-mono font-bold transition duration-500">
+            {randomString}
+          </p>
+        </div>
       </motion.div>
     </div>
   );

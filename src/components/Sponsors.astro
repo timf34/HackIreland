@@ -1,4 +1,5 @@
 ---
+import { EvervaultCard } from './EvervaultCard';
 ---
 
 <div class="sponsors-container">
@@ -6,36 +7,41 @@
     <div class="sponsors-wrapper">
         <section class="sponsors-section">
             <h2 class="sponsors-title">Sponsors</h2>
-            <div class="sponsors-grid">
-                <div class="sponsor-item">
-                    <a href="https://www.intercom.com/careers" target="_blank">
-                        <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
-                    </a>
+            <div class="sponsors-content">
+                <div class="scramble-overlay">
+                    <EvervaultCard radiusSize={150} client:load />
                 </div>
-                <div class="sponsor-item">
-                    <a href="https://www.tines.com/careers/" target="_blank">
-                        <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
-                    </a>
-                </div>
-                <div class="sponsor-item">
-                    <a href="https://stripe.com/ie/jobs/university" target="_blank">
-                        <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-                    </a>
-                </div>
-                <div class="sponsor-item">
-                    <a href="https://www.joinpatch.org/" target="_blank">
-                        <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
-                    </a>
-                </div>
-                <div class="sponsor-item">
-                    <a href="https://www.openai.com" target="_blank">
-                        <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
-                    </a>
-                </div>
-                <div class="sponsor-item">
-                    <a href="https://dogpatchlabs.com/about/" target="_blank">
-                        <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
-                    </a>
+                <div class="sponsors-grid">
+                    <div class="sponsor-item">
+                        <a href="https://www.intercom.com/careers" target="_blank">
+                            <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.tines.com/careers/" target="_blank">
+                            <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://stripe.com/ie/jobs/university" target="_blank">
+                            <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.joinpatch.org/" target="_blank">
+                            <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.openai.com" target="_blank">
+                            <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://dogpatchlabs.com/about/" target="_blank">
+                            <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </section>
@@ -76,7 +82,7 @@
         width: 100%;
         background: #13151a;
         z-index: 2;
-        margin-top: -1px; /* Prevents any potential gap */
+        margin-top: -1px;
         margin-bottom: -1px;
     }
 
@@ -86,6 +92,23 @@
         padding: 4rem 1rem;
     }
 
+    .sponsors-content {
+        position: relative;
+        min-height: 400px;
+    }
+
+    .scramble-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sponsors-content:hover .scramble-overlay {
+        opacity: 0.25;
+    }
+
     .sponsors-title {
         text-align: center;
         color: white;
@@ -93,20 +116,27 @@
         margin-bottom: 4rem;
         font-weight: bold;
         font-family: monospace;
+        pointer-events: none;
     }
 
     .sponsors-grid {
+        position: relative;
+        z-index: 2;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 3rem;
         justify-items: center;
         align-items: center;
+        pointer-events: none;
     }
 
     .sponsor-item {
         width: 100%;
         max-width: 200px;
         transition: transform 0.2s ease;
+        position: relative;
+        z-index: 2;
+        pointer-events: auto;
     }
 
     .sponsor-item:hover {

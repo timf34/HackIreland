@@ -2,80 +2,133 @@
 import { EvervaultCard } from './EvervaultCard';
 ---
 
-<!-- TODO: Make this work! We need to make it more efficient... I'll come back to this later and think through it -->
-<!-- <div class="scramble-container">
-    <div class="scramble-overlay">
-        <EvervaultCard 
-            radiusSize={400}
-            client:load 
-        />
+<div class="sponsors-container">
+    <div class="gradient-top"></div>
+    <div class="sponsors-wrapper">
+        <!-- TODO: Make this work! We need to make it more efficient... I'll come back to this later and think through it -->
+        <!-- <div class="scramble-container">
+            <div class="scramble-overlay">
+                <EvervaultCard 
+                    radiusSize={400}
+                    client:load 
+                />
+            </div>
+        </div> -->
+        <section class="sponsors-section">
+            <h2 class="sponsors-title">Sponsors</h2>
+            <div class="sponsors-content">
+                <div class="sponsors-grid">
+                    <div class="sponsor-item">
+                        <a href="https://www.intercom.com/careers" target="_blank">
+                            <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.tines.com/careers/" target="_blank">
+                            <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://stripe.com/ie/jobs/university" target="_blank">
+                            <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.joinpatch.org/" target="_blank">
+                            <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://www.openai.com" target="_blank">
+                            <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
+                        </a>
+                    </div>
+                    <div class="sponsor-item">
+                        <a href="https://dogpatchlabs.com/about/" target="_blank">
+                            <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div> -->
-
-
-<section class="sponsors-section">
-    <div class="sponsors-content">
-        <h2 class="sponsors-title">Sponsors</h2>
-        <div class="sponsors-grid">
-            <div class="sponsor-item">
-                <a href="https://www.intercom.com/careers" target="_blank">
-                    <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
-                </a>
-            </div>
-            <div class="sponsor-item">
-                <a href="https://www.tines.com/careers/" target="_blank">
-                    <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
-                </a>
-            </div>
-            <div class="sponsor-item">
-                <a href="https://stripe.com/ie/jobs/university" target="_blank">
-                    <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-                </a>
-            </div>
-            <div class="sponsor-item">
-                <a href="https://www.joinpatch.org/" target="_blank">
-                    <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
-                </a>
-            </div>
-            <div class="sponsor-item">
-                <a href="https://www.openai.com" target="_blank">
-                    <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
-                </a>
-            </div>
-            <div class="sponsor-item">
-                <a href="https://dogpatchlabs.com/about/" target="_blank">
-                    <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
+    <div class="gradient-bottom"></div>
+</div>
 
 <style>
+    .sponsors-container {
+        position: relative;
+        width: 100vw;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .gradient-top {
+        position: relative;
+        height: 150px;
+        width: 100%;
+        background: linear-gradient(to bottom, transparent, #13151a);
+        z-index: 1;
+    }
+
+    .gradient-bottom {
+        position: relative;
+        height: 150px;
+        width: 100%;
+        background: linear-gradient(to top, transparent, #13151a);
+        z-index: 1;
+    }
+
+    .sponsors-wrapper {
+        position: relative;
+        width: 100%;
+        background: #13151a;
+        z-index: 2;
+        margin-top: -1px;
+        margin-bottom: -1px;
+    }
+
+    .scramble-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        overflow: hidden;
+    }
+
+    .scramble-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sponsors-wrapper:hover .scramble-overlay {
+        opacity: 0.25;
+    }
 
     .sponsors-section {
         position: relative;
-        width: 100vw;
-        min-height: 400px;
-        background: #13151a;
-        display: flex;
-        justify-content: center;
-        margin: 0;
+        max-width: 800px;
+        margin: 0 auto;
         padding: 4rem 1rem;
         z-index: 2;
-        margin-left: calc(-50vw + 50%);
-        margin-right: calc(-50vw + 50%);
     }
 
     .sponsors-content {
-        max-width: 800px;
-        width: 100%;
+        position: relative;
+        min-height: 400px;
     }
 
     .sponsors-title {
         text-align: center;
         color: white;
-        font-size: 4rem;
+        font-size: 2.5rem;
         margin-bottom: 4rem;
         font-weight: bold;
         font-family: monospace;
@@ -129,10 +182,10 @@ import { EvervaultCard } from './EvervaultCard';
         }
     }
 
-    /* @media (max-width: 640px) {
+    @media (max-width: 640px) {
         .gradient-top,
         .gradient-bottom {
             height: 100px;
         }
-    } */
+    }
 </style>

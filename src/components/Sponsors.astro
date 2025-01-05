@@ -12,8 +12,9 @@ import { EvervaultCard } from './EvervaultCard';
     </div>
 </div> -->
 
+
 <section class="sponsors-section">
-    <div class="gradient-top"></div>
+    <!-- <div class="gradient-top"></div> -->
     <h2 class="sponsors-title">Sponsors</h2>
     <div class="sponsors-grid">
         <div class="sponsor-item">
@@ -29,7 +30,7 @@ import { EvervaultCard } from './EvervaultCard';
         <div class="sponsor-item">
             <a href="https://stripe.com/ie/jobs/university" target="_blank">
                 <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-            </a><
+            </a>
         </div>
         <div class="sponsor-item">
             <a href="https://www.joinpatch.org/" target="_blank">
@@ -47,12 +48,24 @@ import { EvervaultCard } from './EvervaultCard';
             </a>
         </div>
     </div>
-    <div class="gradient-bottom"></div>
+    <!-- <div class="gradient-bottom"></div> -->
 </section>
 
 <style>
 
-    .gradient-top {
+    .sponsors-section {
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        background: #13151a;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto;
+        padding: 4rem 1rem;
+        z-index: 2;
+    }
+
+    /* .gradient-top {
         position: relative;
         height: 150px;
         width: 100%;
@@ -66,25 +79,12 @@ import { EvervaultCard } from './EvervaultCard';
         width: 100%;
         background: linear-gradient(to top, transparent, #13151a);
         z-index: 1;
-    }
-
-    .sponsors-section {
-        position: relative;
-        width: 100%;
-        
-        min-height: 400px;
-        background: #13151a;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto;
-        padding: 4rem 1rem;
-        z-index: 2;
-    }
+    } */
 
     .sponsors-title {
         text-align: center;
         color: white;
-        font-size: 2.5rem;
+        font-size: 4rem;
         margin-bottom: 4rem;
         font-weight: bold;
         font-family: monospace;
@@ -138,10 +138,10 @@ import { EvervaultCard } from './EvervaultCard';
         }
     }
 
-    @media (max-width: 640px) {
+    /* @media (max-width: 640px) {
         .gradient-top,
         .gradient-bottom {
             height: 100px;
         }
-    }
+    } */
 </style>

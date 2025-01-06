@@ -48,7 +48,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
                         </div>
                     </div>
                     <div class="sponsor-item">
-                        <div class="sponsor-bubbleponsor-bubble">
+                        <div class="sponsor-bubble">
                             <a href="https://www.openai.com" target="_blank">
                                 <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
                             </a>
@@ -69,16 +69,18 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 </div>
 
 <script>
-    const sponsorsGrid = document.getElementById('sponsorsGrid');
+    const sponsorItems = document.querySelectorAll('.sponsor-item');
     const scrambleWrapper = document.getElementById('scrambleWrapper');
 
-    if (sponsorsGrid && scrambleWrapper) {
-        sponsorsGrid.addEventListener('mouseenter', () => {
-            scrambleWrapper.style.opacity = '0';
-        });
+    if (sponsorItems && scrambleWrapper) {
+        sponsorItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                scrambleWrapper.style.opacity = '0';
+            });
 
-        sponsorsGrid.addEventListener('mouseleave', () => {
-            scrambleWrapper.style.opacity = '1';
+            item.addEventListener('mouseleave', () => {
+                scrambleWrapper.style.opacity = '1';
+            });
         });
     }
 </script>
@@ -128,7 +130,12 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         height: 100%;
         pointer-events: none;
         z-index: 3;
+        opacity: 1;
         transition: opacity 0.3s ease;
+    }
+
+    .scramble-wrapper[style*="opacity: 0"] {
+        transition: opacity 1s ease;
     }
 
     .sponsors-section {
@@ -136,7 +143,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 800px;
         margin: 0 auto;
         padding: 0 1rem;
-        background: red;
     }
 
     .sponsors-content {
@@ -170,7 +176,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         position: relative;
         z-index: 5;
         pointer-events: auto;
-        background: blue;
     }
 
     .sponsor-bubble {
@@ -182,23 +187,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         background: rgba(19, 21, 26, 0.5);
         transition: all 0.3s ease;
         z-index: 5;
-    }
-
-    .sponsor-bubble::before {
-        content: '';
-        position: absolute;
-        inset: -1px;
-        border-radius: 0.8rem;
-        padding: 1px;
-        background: linear-gradient(
-            45deg,
-            rgba(255, 255, 255, 0.1),
-            rgba(255, 255, 255, 0.05)
-        );
-        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-        -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
     }
 
     .sponsor-bubble::after {

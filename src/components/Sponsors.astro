@@ -18,7 +18,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         <section class="sponsors-section">
             <h2 class="sponsors-title">Sponsors</h2>
             <div class="sponsors-content">
-                <div class="sponsors-grid" id="sponsorsGrid">
+                <div class="sponsors-grid">
                     <div class="sponsor-item">
                         <div class="sponsor-bubble">
                             <a href="https://www.intercom.com/careers" target="_blank">
@@ -48,7 +48,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
                         </div>
                     </div>
                     <div class="sponsor-item">
-                        <div class="sponsor-bubble">
+                        <div class="sponsor-bubbleponsor-bubble">
                             <a href="https://www.openai.com" target="_blank">
                                 <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
                             </a>
@@ -136,7 +136,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 800px;
         margin: 0 auto;
         padding: 0 1rem;
-        z-index: 4;
+        background: red;
     }
 
     .sponsors-content {
@@ -168,8 +168,9 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 200px;
         transition: transform 0.2s ease;
         position: relative;
-        z-index: 4;
+        z-index: 5;
         pointer-events: auto;
+        background: blue;
     }
 
     .sponsor-bubble {
@@ -180,6 +181,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         border-radius: 0.75rem;
         background: rgba(19, 21, 26, 0.5);
         transition: all 0.3s ease;
+        z-index: 5;
     }
 
     .sponsor-bubble::before {

@@ -71,28 +71,66 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 <script>
     const sponsorItems = document.querySelectorAll('.sponsor-item');
     const scrambleWrapper = document.getElementById('scrambleWrapper');
-    const sponsorsContainer = document.querySelector('.sponsors-container');
+    // The element we want to track for edge distance is now the .sponsors-wrapper
+    const sponsorWrapper = document.querySelector('.sponsors-wrapper');
 
-    if (sponsorItems && scrambleWrapper && sponsorsContainer) {
+    if (sponsorItems && scrambleWrapper && sponsorWrapper) {
+        let isHoveringSponsor = false;
+
+        // -- Original hover functionality: Hide scramble on sponsor hover
         sponsorItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
                 scrambleWrapper.style.opacity = '0';
+                isHoveringSponsor = true;
             });
-
             item.addEventListener('mouseleave', () => {
-                scrambleWrapper.style.opacity = '1';
+                isHoveringSponsor = false;
             });
         });
 
-        sponsorsContainer.addEventListener('mouseleave', () => {
+        // -- Edge fade: only track mouse movement inside .sponsors-wrapper
+        sponsorWrapper.addEventListener('mousemove', (e) => {
+            // If currently hovering a sponsor, do nothing
+            if (isHoveringSponsor) return;
+
+            // Get bounding rect of the .sponsors-wrapper
+            const rect = sponsorWrapper.getBoundingClientRect();
+            const x = e.clientX - rect.left;  // mouse X inside wrapper
+            const y = e.clientY - rect.top;   // mouse Y inside wrapper
+
+            // Distance from each edge
+            const edgeDistance = 100;  // the distance from the edge where fade starts
+            const distTop    = y;
+            const distBottom = rect.height - y;
+            const distLeft   = x;
+            const distRight  = rect.width - x;
+
+            // The scramble becomes more transparent the closer you get to any edge
+            const minDist = Math.min(distTop, distBottom, distLeft, distRight);
+
+            // Full opacity unless within edgeDistance of an edge
+            let newOpacity = 1;
+            if (minDist < edgeDistance) {
+                newOpacity = minDist / edgeDistance;
+            }
+
+            scrambleWrapper.style.opacity = newOpacity.toString();
+        });
+
+        // -- Hide scramble completely when mouse leaves .sponsors-wrapper
+        sponsorWrapper.addEventListener('mouseleave', () => {
             scrambleWrapper.style.opacity = '0';
         });
 
-        sponsorsContainer.addEventListener('mouseenter', () => {
-            scrambleWrapper.style.opacity = '1';
+        // -- Re-show scramble if re-entering the wrapper (and not over a sponsor)
+        sponsorWrapper.addEventListener('mouseenter', () => {
+            if (!isHoveringSponsor) {
+                scrambleWrapper.style.opacity = '1';
+            }
         });
     }
 </script>
+
 
 <style>
     .sponsors-container {

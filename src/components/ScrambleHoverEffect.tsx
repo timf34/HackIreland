@@ -10,6 +10,7 @@ interface GridCell {
   content: string;
   lastUpdate: number;
   isUnderMouse: boolean;
+  distance: number; // Distance from mouse center
 }
 
 interface ScrambleEffectProps {
@@ -38,9 +39,19 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       .join('');
   }, []);
 
-  const maskImage = useMotionTemplate`radial-gradient(${radiusSize * 2}px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.1) 30%, transparent 100%)`;
+  // Create a smooth gradient mask with multiple stops
+  const maskImage = useMotionTemplate`
+    radial-gradient(
+      ${radiusSize * 3}px at ${mouseX}px ${mouseY}px,
+      rgba(255,255,255,0.5) 0%,
+      rgba(255,255,255,0.4) 20%,
+      rgba(255,255,255,0.3) 40%,
+      rgba(255,255,255,0.2) 60%,
+      rgba(255,255,255,0.1) 80%,
+      transparent 100%
+    )
+  `;
 
-  // Set up periodic text scrambling for cells under mouse
   useEffect(() => {
     if (!lastMousePosition) return;
 
@@ -48,7 +59,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       const { x, y } = lastMousePosition;
       const centerCellX = Math.floor(x / CELL_SIZE);
       const centerCellY = Math.floor(y / CELL_SIZE);
-      const radius = Math.ceil(radiusSize / CELL_SIZE);
+      const radius = Math.ceil((radiusSize * 3) / CELL_SIZE); // Increased radius for smoother fade
 
       setGrid(prevGrid => {
         const newGrid = { ...prevGrid };
@@ -57,19 +68,22 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
             const cellX = centerCellX + dx;
             const cellY = centerCellY + dy;
             const distance = Math.sqrt(dx * dx + dy * dy);
+            
             if (distance <= radius) {
               const key = `${cellX},${cellY}`;
               if (Math.random() < 0.3) {
                 newGrid[key] = {
                   content: generateCellContent(),
                   lastUpdate: Date.now(),
-                  isUnderMouse: true
+                  isUnderMouse: true,
+                  distance: distance / radius // Normalize distance to 0-1
                 };
               } else if (!newGrid[key]) {
                 newGrid[key] = {
                   content: generateCellContent(),
                   lastUpdate: Date.now(),
-                  isUnderMouse: true
+                  isUnderMouse: true,
+                  distance: distance / radius
                 };
               }
             }
@@ -87,7 +101,6 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     };
   }, [lastMousePosition, radiusSize, generateCellContent]);
 
-  // Clean up old cells that are not under the mouse
   useEffect(() => {
     const cleanupInterval = setInterval(() => {
       setGrid(prevGrid => {
@@ -122,7 +135,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
 
     const centerCellX = Math.floor(x / CELL_SIZE);
     const centerCellY = Math.floor(y / CELL_SIZE);
-    const radius = Math.ceil(radiusSize / CELL_SIZE);
+    const radius = Math.ceil((radiusSize * 3) / CELL_SIZE);
 
     setGrid(prevGrid => {
       const newGrid = { ...prevGrid };
@@ -138,10 +151,12 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
           
           if (distance <= radius) {
             const key = `${cellX},${cellY}`;
+            const normalizedDistance = distance / radius;
             newGrid[key] = {
               content: generateCellContent(),
               lastUpdate: Date.now(),
-              isUnderMouse: true
+              isUnderMouse: true,
+              distance: normalizedDistance
             };
           }
         }
@@ -158,7 +173,6 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       className={`absolute inset-0 overflow-hidden pointer-events-auto ${className}`}
       style={{ pointerEvents: 'all' }}
     >
-      {/* Background gradient that shows through mask */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-80 mix-blend-overlay transition duration-500"
         style={{
@@ -168,12 +182,13 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
           backdropFilter: 'blur(1px)'
         }}
       >
-        {/* Scrambled text layer */}
         <div className="absolute inset-0">
           {Object.entries(grid).map(([key, cell]) => {
             const [x, y] = key.split(',').map(Number);
-            const opacity = cell.isUnderMouse ? 1 : 
-              Math.max(0, 1 - (Date.now() - cell.lastUpdate) / 500);
+            // Calculate opacity based on distance from center and whether cell is under mouse
+            const distanceOpacity = cell.isUnderMouse ? 
+              Math.max(0.1, 1 - (cell.distance * 0.8)) : // Smooth fade based on distance
+              Math.max(0, 1 - (Date.now() - cell.lastUpdate) / 500); // Fade out when mouse leaves
             
             return (
               <motion.div
@@ -187,7 +202,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
                   color: textColor,
                   fontSize: '12px',
                   lineHeight: '12px',
-                  opacity,
+                  opacity: distanceOpacity,
                 }}
               >
                 {cell.content}

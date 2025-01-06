@@ -111,7 +111,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         inset: 0;
         width: 100%;
         height: 100%;
-        z-index: 2;
+        pointer-events: auto;
+        z-index: 4;
     }
 
     .sponsors-section {
@@ -119,7 +120,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 800px;
         margin: 0 auto;
         padding: 0 1rem;
-        z-index: 3;
+        z-index: 5;
+        pointer-events: none;
     }
 
     .sponsors-content {
@@ -133,6 +135,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         margin-bottom: 2rem;
         font-weight: bold;
         font-family: monospace;
+        pointer-events: none;
     }
 
     .sponsors-grid {
@@ -144,6 +147,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         justify-items: center;
         align-items: center;
         margin-bottom: 30px;
+        pointer-events: none;
     }
 
     .sponsor-item {
@@ -151,7 +155,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 200px;
         transition: transform 0.2s ease;
         position: relative;
-        z-index: 3;
+        z-index: 5;
+        pointer-events: none;
     }
 
     .sponsor-bubble {
@@ -162,7 +167,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         border-radius: 0.75rem;
         background: rgba(19, 21, 26, 0.85);
         transition: all 0.3s ease;
-        pointer-events: none; /* Allow events to pass through to scramble effect */
+        pointer-events: none;
     }
 
     .sponsor-bubble::before {
@@ -205,7 +210,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     .sponsor-item a {
         display: block;
         position: relative;
-        z-index: 4;
+        z-index: 6;
+        pointer-events: auto;
     }
 
     .sponsor-item img {
@@ -214,6 +220,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         filter: brightness(0) invert(1);
         opacity: 0.9;
         transition: opacity 0.2s ease;
+        pointer-events: none;
     }
 
     .sponsor-item img:hover {

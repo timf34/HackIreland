@@ -281,17 +281,23 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     }
 
     @media (max-width: 768px) {
+        .scramble-wrapper {
+            display: none; /* The scramble effect won't appear at all on small screens */
+        }
+
         .sponsors-grid {
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 2rem;
+            gap: 1rem;
         }
 
         .sponsor-item {
-            max-width: 150px;
+        max-width: 150px; /* Increase as desired to make logos larger */
+        transform: none;  /* Remove hover scaling on mobile if you like */
         }
 
-        .sponsor-bubble {
-            padding: 1.5rem;
+        .sponsor-item img {
+            width: 100%;
+            height: auto;
         }
     }
 

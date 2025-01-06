@@ -170,11 +170,11 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`absolute inset-0 overflow-hidden pointer-events-auto ${className}`}
+      className={`absolute inset-0 overflow-hidden ${className}`}
       style={{ pointerEvents: 'all' }}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-80 mix-blend-overlay transition duration-500"
+        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-80 mix-blend-overlay transition duration-500 pointer-events-none"
         style={{
           maskImage,
           WebkitMaskImage: maskImage,

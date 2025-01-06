@@ -1,19 +1,22 @@
 ---
 import { EvervaultCard } from './EvervaultCard';
+import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
+
 ---
 
 <div class="sponsors-container">
     <div class="gradient-top"></div>
     <div class="sponsors-wrapper">
-        <!-- TODO: Make this work! We need to make it more efficient... I'll come back to this later and think through it -->
-        <!-- <div class="scramble-container">
+        <div class="scramble-container">
             <div class="scramble-overlay">
-                <EvervaultCard 
+                <ScrambleHoverEffect 
                     radiusSize={400}
+                    textColor="rgba(255, 255, 255, 0.5)"
+                    gradientColors="white, transparent"
                     client:load 
                 />
             </div>
-        </div> -->
+        </div>
         <section class="sponsors-section">
             <h2 class="sponsors-title">Sponsors</h2>
             <div class="sponsors-content">

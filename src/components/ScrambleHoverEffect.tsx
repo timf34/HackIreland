@@ -4,7 +4,7 @@ import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 const CELL_SIZE = 20;
 const MAX_RADIUS = 300;
 const CHAR_POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ';
-const UPDATE_RATE = 100; // How often to update characters under mouse (ms)
+const UPDATE_RATE = 100;
 
 interface GridCell {
   content: string;
@@ -22,7 +22,7 @@ interface ScrambleEffectProps {
 export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   radiusSize = Math.min(250, MAX_RADIUS),
   textColor = 'rgba(255, 255, 255, 0.7)',
-  gradientColors = 'transparent, rgba(255, 255, 255, 0.1)',
+  gradientColors = 'white, transparent',
   className = '',
 }) => {
   const mouseX = useMotionValue(0);
@@ -39,7 +39,6 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   }, []);
 
   const maskImage = useMotionTemplate`radial-gradient(${radiusSize}px at ${mouseX}px ${mouseY}px, ${gradientColors})`;
-  const backgroundImage = useMotionTemplate`linear-gradient(to right, rgba(124, 58, 237, 0.5), rgba(236, 72, 153, 0.5))`;
 
   // Set up periodic text scrambling for cells under mouse
   useEffect(() => {
@@ -60,7 +59,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
             const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance <= radius) {
               const key = `${cellX},${cellY}`;
-              if (Math.random() < 0.3) { // Randomly update some cells
+              if (Math.random() < 0.3) {
                 newGrid[key] = {
                   content: generateCellContent(),
                   lastUpdate: Date.now(),
@@ -80,7 +79,6 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       });
     };
 
-    // Set up interval for updating cells under mouse
     updateIntervalRef.current = setInterval(updateCellsUnderMouse, UPDATE_RATE);
     return () => {
       if (updateIntervalRef.current) {
@@ -126,14 +124,12 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     const centerCellY = Math.floor(y / CELL_SIZE);
     const radius = Math.ceil(radiusSize / CELL_SIZE);
 
-    // Mark all cells as not under mouse first
     setGrid(prevGrid => {
       const newGrid = { ...prevGrid };
       Object.keys(newGrid).forEach(key => {
         newGrid[key].isUnderMouse = false;
       });
 
-      // Update cells under current mouse position
       for (let dx = -radius; dx <= radius; dx++) {
         for (let dy = -radius; dy <= radius; dy++) {
           const cellX = centerCellX + dx;
@@ -159,42 +155,46 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`absolute inset-0 overflow-hidden pointer-events-auto ${className}`}
+      className={`absolute inset-0 overflow-hidden pointer-events-auto bg-[#13151a] ${className}`}
       style={{ pointerEvents: 'all' }}
     >
+      {/* Background gradient that shows through mask */}
       <motion.div
-        className="absolute inset-0 mix-blend-overlay backdrop-blur-[1px]"
+        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-100 mix-blend-overlay transition duration-500"
         style={{
           maskImage,
           WebkitMaskImage: maskImage,
-          backgroundImage,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          backdropFilter: 'blur(1px)'
         }}
       >
-        {Object.entries(grid).map(([key, cell]) => {
-          const [x, y] = key.split(',').map(Number);
-          const opacity = cell.isUnderMouse ? 1 : 
-            Math.max(0, 1 - (Date.now() - cell.lastUpdate) / 500);
-          
-          return (
-            <motion.div
-              key={key}
-              className="absolute font-mono font-bold pointer-events-none select-none"
-              style={{
-                left: x * CELL_SIZE,
-                top: y * CELL_SIZE,
-                width: CELL_SIZE,
-                height: CELL_SIZE,
-                color: textColor,
-                fontSize: '12px',
-                lineHeight: '12px',
-                opacity,
-              }}
-            >
-              {cell.content}
-            </motion.div>
-          );
-        })}
+        {/* Scrambled text layer */}
+        <div className="absolute inset-0">
+          {Object.entries(grid).map(([key, cell]) => {
+            const [x, y] = key.split(',').map(Number);
+            const opacity = cell.isUnderMouse ? 1 : 
+              Math.max(0, 1 - (Date.now() - cell.lastUpdate) / 500);
+            
+            return (
+              <motion.div
+                key={key}
+                className="absolute font-mono font-bold pointer-events-none select-none"
+                style={{
+                  left: x * CELL_SIZE,
+                  top: y * CELL_SIZE,
+                  width: CELL_SIZE,
+                  height: CELL_SIZE,
+                  color: textColor,
+                  fontSize: '12px',
+                  lineHeight: '12px',
+                  opacity,
+                }}
+              >
+                {cell.content}
+              </motion.div>
+            );
+          })}
+        </div>
       </motion.div>
     </div>
   );

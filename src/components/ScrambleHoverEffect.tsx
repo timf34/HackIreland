@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 
 const CELL_SIZE = 20;
-const MAX_RADIUS = 300;
-const CHAR_POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ';
+const MAX_RADIUS = 100;
+const CHAR_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const UPDATE_RATE = 100;
 
 interface GridCell {
@@ -22,7 +22,7 @@ interface ScrambleEffectProps {
 export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   radiusSize = Math.min(250, MAX_RADIUS),
   textColor = 'rgba(255, 255, 255, 0.7)',
-  gradientColors = 'white, transparent',
+  gradientColors = 'transparent',
   className = '',
 }) => {
   const mouseX = useMotionValue(0);
@@ -38,7 +38,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       .join('');
   }, []);
 
-  const maskImage = useMotionTemplate`radial-gradient(${radiusSize}px at ${mouseX}px ${mouseY}px, ${gradientColors})`;
+  const maskImage = useMotionTemplate`radial-gradient(${radiusSize * 2}px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.3) 30%, rgba(255,255,255,0.1) 30%, transparent 100%)`;
 
   // Set up periodic text scrambling for cells under mouse
   useEffect(() => {
@@ -155,12 +155,12 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     <div 
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className={`absolute inset-0 overflow-hidden pointer-events-auto bg-[#13151a] ${className}`}
+      className={`absolute inset-0 overflow-hidden pointer-events-auto ${className}`}
       style={{ pointerEvents: 'all' }}
     >
       {/* Background gradient that shows through mask */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-100 mix-blend-overlay transition duration-500"
+        className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-80 mix-blend-overlay transition duration-500"
         style={{
           maskImage,
           WebkitMaskImage: maskImage,

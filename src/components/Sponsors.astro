@@ -9,41 +9,53 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
             <h2 class="sponsors-title">Sponsors</h2>
             <div class="sponsors-content">
                 <div class="sponsors-grid">
+                    {/* Each sponsor item now has a mask area */}
                     <div class="sponsor-item">
-                        <a href="https://www.intercom.com/careers" target="_blank">
-                            <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://www.intercom.com/careers" target="_blank">
+                                <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+                            </a>
+                        </div>
                     </div>
                     <div class="sponsor-item">
-                        <a href="https://www.tines.com/careers/" target="_blank">
-                            <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://www.tines.com/careers/" target="_blank">
+                                <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
+                            </a>
+                        </div>
                     </div>
                     <div class="sponsor-item">
-                        <a href="https://stripe.com/ie/jobs/university" target="_blank">
-                            <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://stripe.com/ie/jobs/university" target="_blank">
+                                <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
+                            </a>
+                        </div>
                     </div>
                     <div class="sponsor-item">
-                        <a href="https://www.joinpatch.org/" target="_blank">
-                            <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://www.joinpatch.org/" target="_blank">
+                                <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
+                            </a>
+                        </div>
                     </div>
                     <div class="sponsor-item">
-                        <a href="https://www.openai.com" target="_blank">
-                            <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://www.openai.com" target="_blank">
+                                <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
+                            </a>
+                        </div>
                     </div>
                     <div class="sponsor-item">
-                        <a href="https://dogpatchlabs.com/about/" target="_blank">
-                            <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
-                        </a>
+                        <div class="sponsor-mask">
+                            <a href="https://dogpatchlabs.com/about/" target="_blank">
+                                <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         
-        {/* Move scramble effect after content but make it cover everything */}
         <div class="scramble-wrapper">
             <ScrambleHoverEffect 
                 radiusSize={50}
@@ -93,13 +105,13 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         margin-bottom: -1px;
     }
 
-    /* New wrapper for scramble effect */
     .scramble-wrapper {
         position: absolute;
         inset: 0;
         width: 100%;
         height: 100%;
-        z-index: 3;  /* Place above content */
+        z-index: 2;  /* Below the sponsors */
+        pointer-events: all;
     }
 
     .sponsors-section {
@@ -107,7 +119,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 800px;
         margin: 0 auto;
         padding: 0 1rem;
-        z-index: 2;
+        z-index: 3;
     }
 
     .sponsors-content {
@@ -138,15 +150,41 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         max-width: 200px;
         transition: transform 0.2s ease;
         position: relative;
+        z-index: 3;
+    }
+
+    .sponsor-mask {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 2rem;
+        border-radius: 1rem;
+        background: #13151a;
+        transition: all 0.3s ease;
+    }
+
+    .sponsor-mask::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 1rem;
+        background: #13151a;
+        backdrop-filter: blur(8px);
+        z-index: -1;
     }
 
     .sponsor-item:hover {
         transform: scale(1.05);
     }
 
+    .sponsor-item:hover .sponsor-mask::before {
+        backdrop-filter: blur(12px);
+    }
+
     .sponsor-item a {
         display: block;
-        pointer-events: auto; /* Enable clicks only on links */
+        position: relative;
+        z-index: 4;
     }
 
     .sponsor-item img {

@@ -4,12 +4,11 @@
 //  Think of what John Carmack might do! Should ideally only render within the radius of the mouse I guess, and slightly beyond it. 
 
 import { useMotionValue, useMotionTemplate, motion } from "framer-motion";
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { cn } from "../lib/utils";
 import { generateRandomString } from "../lib/utils";
 
 export const EvervaultCard = ({
-  text,
   className,
   radiusSize = 250,
   fontSize = "8px",
@@ -19,7 +18,6 @@ export const EvervaultCard = ({
   textMultiplier = 100,
   gradientStyle = "white, transparent",
 }: {
-  text?: string;
   className?: string;
   radiusSize?: number;
   fontSize?: string;

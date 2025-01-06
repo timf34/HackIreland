@@ -16,14 +16,12 @@ interface GridCell {
 interface ScrambleEffectProps {
   radiusSize?: number;
   textColor?: string;
-  gradientColors?: string;
   className?: string;
 }
 
 export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   radiusSize = Math.min(250, MAX_RADIUS),
   textColor = 'rgba(255, 255, 255, 0.7)',
-  gradientColors = 'transparent',
   className = '',
 }) => {
   const mouseX = useMotionValue(0);
@@ -31,7 +29,7 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [grid, setGrid] = useState<{ [key: string]: GridCell }>({});
   const [lastMousePosition, setLastMousePosition] = useState<{ x: number, y: number } | null>(null);
-  const updateIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const updateIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   
   const generateCellContent = useCallback(() => {
     return Array(3).fill(0)

@@ -9,7 +9,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
             <ScrambleHoverEffect 
                 radiusSize={50}
                 textColor="rgba(255, 255, 255, 0.7)"
-                gradientColors="white, transparent"
                 client:load 
                 client:visible
             />
@@ -89,8 +88,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         });
   
         // 2) Smooth fading near edges, but only track mouse inside .sponsors-wrapper
-        sponsorWrapper.addEventListener('mousemove', (e) => {
-            // If we're hovering a sponsor, don’t fade
+        sponsorWrapper.addEventListener('mousemove', (e: MouseEvent) => {
+            // If we're hovering a sponsor, don't fade
             if (isHoveringSponsor) return;
   
             // Calculate how far the mouse is from each edge
@@ -121,13 +120,8 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         });
   
         // 4) Reveal scramble when first entering the wrapper (if not over a sponsor)
-        sponsorWrapper.addEventListener('mouseenter', (e) => {
+        sponsorWrapper.addEventListener('mouseenter', () => {
             if (!isHoveringSponsor) {
-                // OPTIONAL:
-                // If you want an immediate edge-based fade when the user enters 
-                // from the edge, you can do the distance calculation right here, 
-                // similar to what’s in “mousemove.” Otherwise, this simple approach 
-                // just sets it to 1, and the next mousemove will adjust it if needed.
                 scrambleWrapper.style.opacity = '1';
             }
         });

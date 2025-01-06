@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useMotionTemplate } from 'framer-motion';
 
-const CELL_SIZE = 20; // Smaller cells for denser text
-const MAX_RADIUS = 300; // Maximum effect radius for performance
-const CHAR_POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?アイウエオカキクケコサシスセソタチツ';
-const CLEANUP_DELAY = 100; // Delay before starting to remove cells
+const CELL_SIZE = 20;
+const MAX_RADIUS = 300;
+const CHAR_POOL = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ';
+const UPDATE_RATE = 100; // How often to update characters under mouse (ms)
 
 interface GridCell {
   content: string;
   lastUpdate: number;
+  isUnderMouse: boolean;
 }
 
 interface ScrambleEffectProps {
@@ -28,8 +29,8 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   const mouseY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [grid, setGrid] = useState<{ [key: string]: GridCell }>({});
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const cleanupTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [lastMousePosition, setLastMousePosition] = useState<{ x: number, y: number } | null>(null);
+  const updateIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
   const generateCellContent = useCallback(() => {
     return Array(3).fill(0)
@@ -40,41 +41,74 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
   const maskImage = useMotionTemplate`radial-gradient(${radiusSize}px at ${mouseX}px ${mouseY}px, ${gradientColors})`;
   const backgroundImage = useMotionTemplate`linear-gradient(to right, rgba(124, 58, 237, 0.5), rgba(236, 72, 153, 0.5))`;
 
-  // Cleanup old cells
-  const cleanupOldCells = useCallback(() => {
-    const now = Date.now();
-    setGrid(prevGrid => {
-      const newGrid = { ...prevGrid };
-      let hasChanges = false;
-      
-      Object.entries(newGrid).forEach(([key, cell]) => {
-        if (now - cell.lastUpdate > 500) { // Remove cells older than 500ms
-          delete newGrid[key];
-          hasChanges = true;
+  // Set up periodic text scrambling for cells under mouse
+  useEffect(() => {
+    if (!lastMousePosition) return;
+
+    const updateCellsUnderMouse = () => {
+      const { x, y } = lastMousePosition;
+      const centerCellX = Math.floor(x / CELL_SIZE);
+      const centerCellY = Math.floor(y / CELL_SIZE);
+      const radius = Math.ceil(radiusSize / CELL_SIZE);
+
+      setGrid(prevGrid => {
+        const newGrid = { ...prevGrid };
+        for (let dx = -radius; dx <= radius; dx++) {
+          for (let dy = -radius; dy <= radius; dy++) {
+            const cellX = centerCellX + dx;
+            const cellY = centerCellY + dy;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance <= radius) {
+              const key = `${cellX},${cellY}`;
+              if (Math.random() < 0.3) { // Randomly update some cells
+                newGrid[key] = {
+                  content: generateCellContent(),
+                  lastUpdate: Date.now(),
+                  isUnderMouse: true
+                };
+              } else if (!newGrid[key]) {
+                newGrid[key] = {
+                  content: generateCellContent(),
+                  lastUpdate: Date.now(),
+                  isUnderMouse: true
+                };
+              }
+            }
+          }
         }
+        return newGrid;
       });
-      
-      return hasChanges ? newGrid : prevGrid;
-    });
-  }, []);
-
-  // Setup cleanup interval
-  useEffect(() => {
-    const cleanupInterval = setInterval(cleanupOldCells, 100);
-    return () => clearInterval(cleanupInterval);
-  }, [cleanupOldCells]);
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        const { width, height } = containerRef.current.getBoundingClientRect();
-        setDimensions({ width, height });
-      }
     };
 
-    updateDimensions();
-    window.addEventListener('resize', updateDimensions);
-    return () => window.removeEventListener('resize', updateDimensions);
+    // Set up interval for updating cells under mouse
+    updateIntervalRef.current = setInterval(updateCellsUnderMouse, UPDATE_RATE);
+    return () => {
+      if (updateIntervalRef.current) {
+        clearInterval(updateIntervalRef.current);
+      }
+    };
+  }, [lastMousePosition, radiusSize, generateCellContent]);
+
+  // Clean up old cells that are not under the mouse
+  useEffect(() => {
+    const cleanupInterval = setInterval(() => {
+      setGrid(prevGrid => {
+        const now = Date.now();
+        const newGrid = { ...prevGrid };
+        let hasChanges = false;
+
+        Object.entries(newGrid).forEach(([key, cell]) => {
+          if (!cell.isUnderMouse && now - cell.lastUpdate > 500) {
+            delete newGrid[key];
+            hasChanges = true;
+          }
+        });
+
+        return hasChanges ? newGrid : prevGrid;
+      });
+    }, 100);
+
+    return () => clearInterval(cleanupInterval);
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -86,32 +120,33 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
     
     mouseX.set(x);
     mouseY.set(y);
+    setLastMousePosition({ x, y });
 
     const centerCellX = Math.floor(x / CELL_SIZE);
     const centerCellY = Math.floor(y / CELL_SIZE);
     const radius = Math.ceil(radiusSize / CELL_SIZE);
-    const now = Date.now();
 
+    // Mark all cells as not under mouse first
     setGrid(prevGrid => {
       const newGrid = { ...prevGrid };
-      
+      Object.keys(newGrid).forEach(key => {
+        newGrid[key].isUnderMouse = false;
+      });
+
+      // Update cells under current mouse position
       for (let dx = -radius; dx <= radius; dx++) {
         for (let dy = -radius; dy <= radius; dy++) {
           const cellX = centerCellX + dx;
           const cellY = centerCellY + dy;
-          
           const distance = Math.sqrt(dx * dx + dy * dy);
+          
           if (distance <= radius) {
             const key = `${cellX},${cellY}`;
-            if (!newGrid[key] || Math.random() < 0.3) {
-              newGrid[key] = {
-                content: generateCellContent(),
-                lastUpdate: now
-              };
-            } else {
-              // Update timestamp for existing cells within radius
-              newGrid[key].lastUpdate = now;
-            }
+            newGrid[key] = {
+              content: generateCellContent(),
+              lastUpdate: Date.now(),
+              isUnderMouse: true
+            };
           }
         }
       }
@@ -138,8 +173,8 @@ export const ScrambleHoverEffect: React.FC<ScrambleEffectProps> = ({
       >
         {Object.entries(grid).map(([key, cell]) => {
           const [x, y] = key.split(',').map(Number);
-          const age = Date.now() - cell.lastUpdate;
-          const opacity = Math.max(0, 1 - age / 500); // Fade out over 500ms
+          const opacity = cell.isUnderMouse ? 1 : 
+            Math.max(0, 1 - (Date.now() - cell.lastUpdate) / 500);
           
           return (
             <motion.div

@@ -71,8 +71,9 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 <script>
     const sponsorItems = document.querySelectorAll('.sponsor-item');
     const scrambleWrapper = document.getElementById('scrambleWrapper');
+    const sponsorsContainer = document.querySelector('.sponsors-container');
 
-    if (sponsorItems && scrambleWrapper) {
+    if (sponsorItems && scrambleWrapper && sponsorsContainer) {
         sponsorItems.forEach(item => {
             item.addEventListener('mouseenter', () => {
                 scrambleWrapper.style.opacity = '0';
@@ -81,6 +82,14 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
             item.addEventListener('mouseleave', () => {
                 scrambleWrapper.style.opacity = '1';
             });
+        });
+
+        sponsorsContainer.addEventListener('mouseleave', () => {
+            scrambleWrapper.style.opacity = '0';
+        });
+
+        sponsorsContainer.addEventListener('mouseenter', () => {
+            scrambleWrapper.style.opacity = '1';
         });
     }
 </script>

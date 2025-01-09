@@ -2,6 +2,7 @@
 
 ## TODO:
 
+- [ ] Fix sponsors spacing vertically on mobile 
 - [ ] Add "view on github" or similar to the footer! 
 - [ ] Add a screenshot of GIF of the website here! 
 - [ ] Consider changing "Hack Ireland" or other font to like this guy has in the "Making Software" title: https://x.com/DanHollick/status/1873346283945246763

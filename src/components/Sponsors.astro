@@ -204,7 +204,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         text-align: center;
         color: white;
         font-size: 3rem;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         font-weight: bold;
         font-family: monospace;
     }
@@ -215,17 +215,19 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         justify-content: center;
         margin-bottom: 2rem;
         width: 100%;
-        max-width: 1000px;
-        margin-left: auto;
-        margin-right: auto;
     }
 
     .row1 {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 1000px;
+        margin: 0 auto;
+        margin-bottom: 1rem;
     }
 
     .row2 {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        max-width: 1000px;
+        margin: 0 auto;
     }
 
     .sponsor-item {
@@ -234,18 +236,23 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         position: relative;
         z-index: 5;
         pointer-events: auto;
+        display: flex;
+        justify-content: center;
     }
 
-    .row1 .sponsor-item {
-        max-width: 220px;
+    .row1 .sponsor-bubble {
+        width: 100%;
+        max-width: 250px;
+        padding: 1.25rem;
     }
 
-    .row2 .sponsor-item {
-        max-width: 180px;
+    .row2 .sponsor-bubble {
+        width: 100%;
+        max-width: 190px;
+        padding: 1rem;
     }
 
     .sponsor-bubble {
-        padding: 1.25rem;
         position: relative;
         border-radius: 0.75rem;
         display: flex;
@@ -254,6 +261,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         background: rgba(19, 21, 26, 0.5);
         transition: all 0.3s ease;
         z-index: 5;
+        margin: 0.5rem 0.5rem;
     }
 
     .sponsor-bubble::after {
@@ -266,10 +274,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     }
     .sponsor-item:hover .sponsor-bubble::after {
         backdrop-filter: blur(24px);
-    }
-
-    .row2 .sponsor-bubble {
-        padding: 1rem;
     }
 
     .sponsor-item a {

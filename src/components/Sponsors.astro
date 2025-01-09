@@ -3,135 +3,141 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 ---
 
 <div class="sponsors-container">
-    <div class="gradient-top"></div>
-    <div class="sponsors-wrapper">
-        <div class="scramble-wrapper" id="scrambleWrapper">
-            <ScrambleHoverEffect 
-                radiusSize={50}
-                textColor="rgba(255, 255, 255, 0.7)"
-                client:load 
-                client:visible
-            />
-        </div>
-        
-        <section class="sponsors-section">
-            <h2 class="sponsors-title">Sponsors</h2>
-            <div class="sponsors-content">
-                <div class="sponsors-grid">
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://www.intercom.com/careers" target="_blank">
-                                <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://www.tines.com/careers/" target="_blank">
-                                <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://stripe.com/ie/jobs/university" target="_blank">
-                                <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://www.joinpatch.org/" target="_blank">
-                                <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://www.openai.com" target="_blank">
-                                <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sponsor-item">
-                        <div class="sponsor-bubble">
-                            <a href="https://dogpatchlabs.com/about/" target="_blank">
-                                <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <div class="gradient-top"></div>
+  <div class="sponsors-wrapper">
+    <div class="scramble-wrapper" id="scrambleWrapper">
+      <ScrambleHoverEffect 
+        radiusSize={50}
+        textColor="rgba(255, 255, 255, 0.7)"
+        client:load 
+        client:visible
+      />
     </div>
-    <div class="gradient-bottom"></div>
+    
+    <section class="sponsors-section">
+      <h2 class="sponsors-title">Sponsors</h2>
+      <div class="sponsors-content">
+        <div class="sponsors-row row1">
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://www.intercom.com/careers" target="_blank">
+                  <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+                </a>
+              </div>
+            </div>
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://www.tines.com/careers/" target="_blank">
+                  <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
+                </a>
+              </div>
+            </div>
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://www.openai.com" target="_blank">
+                  <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
+                </a>
+              </div>
+            </div>
+          </div>
+        
+          <!-- Bottom row (4 logos) -->
+          <div class="sponsors-row row2">
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://www.joinpatch.org/" target="_blank">
+                  <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
+                </a>
+              </div>
+            </div>
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://stripe.com/ie/jobs/university" target="_blank">
+                  <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
+                </a>
+              </div>
+            </div>
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://dogpatchlabs.com/about/" target="_blank">
+                  <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
+                </a>
+              </div>
+            </div>
+            <div class="sponsor-item">
+              <div class="sponsor-bubble">
+                <a href="https://www.ndrc.ie/" target="_blank">
+                  <img src="/NDRCLogoWhite.png" alt="Sponsor 7" />
+                </a>
+              </div>
+            </div>
+          </div>        
+      </div>
+    </section>
+  </div>
+  <div class="gradient-bottom"></div>
 </div>
 
 <script>
-    const sponsorItems = document.querySelectorAll('.sponsor-item');
-    const scrambleWrapper = document.getElementById('scrambleWrapper');
-    // We'll track edge distance within the .sponsors-wrapper
-    const sponsorWrapper = document.querySelector('.sponsors-wrapper');
-  
-    if (sponsorItems && scrambleWrapper && sponsorWrapper) {
-        let isHoveringSponsor = false;
-  
-        // 1) Hide scramble on sponsor hover
-        sponsorItems.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                scrambleWrapper.style.opacity = '0';
-                isHoveringSponsor = true;
-            });
-            item.addEventListener('mouseleave', () => {
-                isHoveringSponsor = false;
-            });
-        });
-  
-        // 2) Smooth fading near edges, but only track mouse inside .sponsors-wrapper
-        sponsorWrapper.addEventListener('mousemove', (e: MouseEvent) => {
-            // If we're hovering a sponsor, don't fade
-            if (isHoveringSponsor) return;
-  
-            // Calculate how far the mouse is from each edge
-            const rect = sponsorWrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-  
-            const edgeDistance = 100;
-            const distTop    = y;
-            const distBottom = rect.height - y;
-            const distLeft   = x;
-            const distRight  = rect.width - x;
-  
-            // The scramble becomes more transparent closer to any edge
-            const minDist = Math.min(distTop, distBottom, distLeft, distRight);
-  
-            let newOpacity = 1;
-            if (minDist < edgeDistance) {
-                newOpacity = minDist / edgeDistance;
-            }
-  
-            scrambleWrapper.style.opacity = newOpacity.toString();
-        });
-  
-        // 3) Hide scramble completely when leaving the wrapper
-        sponsorWrapper.addEventListener('mouseleave', () => {
-            scrambleWrapper.style.opacity = '0';
-        });
-  
-        // 4) Reveal scramble when first entering the wrapper (if not over a sponsor)
-        sponsorWrapper.addEventListener('mouseenter', () => {
-            if (!isHoveringSponsor) {
-                scrambleWrapper.style.opacity = '1';
-            }
-        });
-    }
-  </script>
-  
+  const sponsorItems = document.querySelectorAll('.sponsor-item');
+  const scrambleWrapper = document.getElementById('scrambleWrapper');
+  // We'll track edge distance within the .sponsors-wrapper
+  const sponsorWrapper = document.querySelector('.sponsors-wrapper');
 
+  if (sponsorItems && scrambleWrapper && sponsorWrapper) {
+    let isHoveringSponsor = false;
+
+    // 1) Hide scramble on sponsor hover
+    sponsorItems.forEach(item => {
+      item.addEventListener('mouseenter', () => {
+        scrambleWrapper.style.opacity = '0';
+        isHoveringSponsor = true;
+      });
+      item.addEventListener('mouseleave', () => {
+        isHoveringSponsor = false;
+      });
+    });
+
+    // 2) Smooth fading near edges, but only track mouse inside .sponsors-wrapper
+    sponsorWrapper.addEventListener('mousemove', (e) => {
+      if (isHoveringSponsor) return;
+
+      const rect = sponsorWrapper.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const edgeDistance = 100;
+      const distTop    = y;
+      const distBottom = rect.height - y;
+      const distLeft   = x;
+      const distRight  = rect.width - x;
+
+      const minDist = Math.min(distTop, distBottom, distLeft, distRight);
+
+      let newOpacity = 1;
+      if (minDist < edgeDistance) {
+        newOpacity = minDist / edgeDistance;
+      }
+
+      scrambleWrapper.style.opacity = newOpacity.toString();
+    });
+
+    // 3) Hide scramble completely when leaving the wrapper
+    sponsorWrapper.addEventListener('mouseleave', () => {
+      scrambleWrapper.style.opacity = '0';
+    });
+
+    // 4) Reveal scramble when first entering the wrapper (if not over a sponsor)
+    sponsorWrapper.addEventListener('mouseenter', () => {
+      if (!isHoveringSponsor) {
+        scrambleWrapper.style.opacity = '1';
+      }
+    });
+  }
+</script>
 
 <style>
-    .sponsors-container {
+  .sponsors-container {
         position: relative;
         width: 100vw;
         left: 50%;
@@ -175,7 +181,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         height: 100%;
         pointer-events: none;
         z-index: 3;
-        /* Hide it at page load */
         opacity: 0;
         transition: opacity 0.3s ease;
     }
@@ -186,7 +191,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 
     .sponsors-section {
         position: relative;
-        max-width: 800px;
+        max-width: 1000px;
         margin: 0 auto;
         padding: 0 1rem;
     }
@@ -204,39 +209,54 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         font-family: monospace;
     }
 
-    .sponsors-grid {
-        position: relative;
+    .sponsors-row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 3rem;
-        justify-items: center;
-        align-items: center;
-        margin-bottom: 30px;
-        padding: 1rem;
+        gap: 2rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        width: 100%;
+        max-width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .row1 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .row2 {
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .sponsor-item {
         width: 100%;
-        max-width: 200px;
         transition: transform 0.2s ease;
         position: relative;
         z-index: 5;
         pointer-events: auto;
     }
 
+    .row1 .sponsor-item {
+        max-width: 220px;
+    }
+
+    .row2 .sponsor-item {
+        max-width: 180px;
+    }
+
     .sponsor-bubble {
+        padding: 1.25rem;
         position: relative;
-        width: 100%;
-        height: 100%;
-        padding: 0.75rem;
         border-radius: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background: rgba(19, 21, 26, 0.5);
         transition: all 0.3s ease;
         z-index: 5;
     }
 
     .sponsor-bubble::after {
-        content: '';
         position: absolute;
         inset: 0;
         border-radius: 0.75rem;
@@ -244,17 +264,20 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         backdrop-filter: blur(12px);
         z-index: -1;
     }
-
-    .sponsor-item:hover {
-        transform: scale(1.05);
-    }
-
     .sponsor-item:hover .sponsor-bubble::after {
         backdrop-filter: blur(24px);
     }
 
+    .row2 .sponsor-bubble {
+        padding: 1rem;
+    }
+
     .sponsor-item a {
         display: block;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
         position: relative;
         z-index: 4;
         mix-blend-mode: normal;
@@ -268,6 +291,11 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
         opacity: 0.9;
         transition: opacity 0.2s ease;
         pointer-events: auto;
+        object-fit: contain;
+    }
+
+    .sponsor-item:hover {
+        transform: scale(1.01);
     }
 
     .sponsor-item img:hover {
@@ -276,22 +304,22 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 
     @media (max-width: 768px) {
         .scramble-wrapper {
-            display: none; /* The scramble effect won't appear at all on small screens */
+            display: none;
         }
 
         .sponsors-grid {
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
+            grid-template-rows: auto;
         }
 
-        .sponsor-item {
-        max-width: 150px; /* Increase as desired to make logos larger */
-        transform: none;  /* Remove hover scaling on mobile if you like */
-        }
-
-        .sponsor-item img {
-            width: 100%;
-            height: auto;
+        .sponsor-item,
+        .sponsor-item:nth-child(-n+3),
+        .sponsor-item:nth-child(n+4) {
+            grid-column: auto;
+            grid-row: auto;
+            max-width: 150px;
+            margin: 0;
         }
     }
 

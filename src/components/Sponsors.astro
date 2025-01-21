@@ -17,61 +17,62 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     <section class="sponsors-section">
       <h2 class="sponsors-title">Sponsors</h2>
       <div class="sponsors-content">
+        <!-- Top row (3 logos) -->
         <div class="sponsors-row row1">
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://www.intercom.com/careers" target="_blank">
-                  <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
-                </a>
-              </div>
-            </div>
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://www.tines.com/careers/" target="_blank">
-                  <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
-                </a>
-              </div>
-            </div>
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://stripe.com/ie/jobs/university" target="_blank">
-                  <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
-                </a>
-              </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://www.intercom.com/careers" target="_blank">
+                <img src="/IntercomLogoWhite.png" alt="Sponsor 1" />
+              </a>
             </div>
           </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://www.tines.com/careers/" target="_blank">
+                <img src="/TinesLogoWhite.png" alt="Sponsor 2" />
+              </a>
+            </div>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://stripe.com/ie/jobs/university" target="_blank">
+                <img src="/StripeLogoWhite.png" alt="Stripe Sponsor Logo" />
+              </a>
+            </div>
+          </div>
+        </div>
         
-          <!-- Bottom row (4 logos) -->
-          <div class="sponsors-row row2">
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://www.joinpatch.org/" target="_blank">
-                  <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
-                </a>
-              </div>
+        <!-- Bottom row (4 logos) -->
+        <div class="sponsors-row row2">
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://www.joinpatch.org/" target="_blank">
+                <img src="/PatchLogoWhite.png" alt="Sponsor 3" />
+              </a>
             </div>
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://www.openai.com" target="_blank">
-                  <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
-                </a>
-              </div>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://www.openai.com" target="_blank">
+                <img src="/OpenAILogoWhite.png" alt="Sponsor 4" />
+              </a>
             </div>
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://dogpatchlabs.com/about/" target="_blank">
-                  <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
-                </a>
-              </div>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://dogpatchlabs.com/about/" target="_blank">
+                <img src="/DogpatchLogoWhite.png" alt="Sponsor 5" />
+              </a>
             </div>
-            <div class="sponsor-item">
-              <div class="sponsor-bubble">
-                <a href="https://www.ndrc.ie/" target="_blank">
-                  <img src="/NDRCLogoWhite.png" alt="Sponsor 7" />
-                </a>
-              </div>
+          </div>
+          <div class="sponsor-item">
+            <div class="sponsor-bubble">
+              <a href="https://www.ndrc.ie/" target="_blank">
+                <img src="/NDRCLogoWhite.png" alt="Sponsor 7" />
+              </a>
             </div>
-          </div>        
+          </div>
+        </div>        
       </div>
     </section>
   </div>
@@ -81,7 +82,6 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 <script>
   const sponsorItems = document.querySelectorAll('.sponsor-item');
   const scrambleWrapper = document.getElementById('scrambleWrapper');
-  // We'll track edge distance within the .sponsors-wrapper
   const sponsorWrapper = document.querySelector('.sponsors-wrapper');
 
   if (sponsorItems && scrambleWrapper && sponsorWrapper) {
@@ -99,7 +99,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     });
 
     // 2) Smooth fading near edges, but only track mouse inside .sponsors-wrapper
-    sponsorWrapper.addEventListener('mousemove', (e: MouseEvent) => {
+    sponsorWrapper.addEventListener('mousemove', (e) => {
       if (isHoveringSponsor) return;
 
       const rect = sponsorWrapper.getBoundingClientRect();
@@ -113,12 +113,10 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
       const distRight  = rect.width - x;
 
       const minDist = Math.min(distTop, distBottom, distLeft, distRight);
-
       let newOpacity = 1;
       if (minDist < edgeDistance) {
         newOpacity = minDist / edgeDistance;
       }
-
       scrambleWrapper.style.opacity = newOpacity.toString();
     });
 
@@ -137,235 +135,187 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
 </script>
 
 <style>
+  /* Outer container and gradients */
   .sponsors-container {
-        position: relative;
-        width: 100vw;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-        display: flex;
-        flex-direction: column;
-    }
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    display: flex;
+    flex-direction: column;
+  }
+  .gradient-top {
+    height: 100px;
+    width: 100%;
+    background: linear-gradient(to bottom, transparent, #13151a);
+    z-index: 1;
+  }
+  .gradient-bottom {
+    height: 150px;
+    width: 100%;
+    background: linear-gradient(to top, transparent, #13151a);
+    z-index: 1;
+  }
 
-    .gradient-top {
-        position: relative;
-        height: 100px;
-        width: 100%;
-        background: linear-gradient(to bottom, transparent, #13151a);
-        z-index: 1;
-    }
-
-    .gradient-bottom {
-        position: relative;
-        height: 150px;
-        width: 100%;
-        background: linear-gradient(to top, transparent, #13151a);
-        z-index: 1;
-    }
-
-    .sponsors-wrapper {
-        position: relative;
-        width: 100%;
+  /* Main wrapper + scramble effect */
+  .sponsors-wrapper {
+    position: relative;
+    width: 100%;
         background: #13151a;
-        z-index: 2;
-        margin-top: -1px;
-        margin-bottom: -1px;
-        overflow: hidden;
-    }
+    z-index: 2;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    overflow: hidden;
+  }
+  .scramble-wrapper {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .scramble-wrapper[style*="opacity: 0"] {
+    transition: opacity 1s ease;
+  }
 
+  /* Section + heading */
+  .sponsors-section {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  .sponsors-title {
+    text-align: center;
+    color: white;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    font-family: monospace;
+  }
+  .sponsors-content {
+    position: relative;
+  }
+
+  /* Rows (3 columns vs 4 columns) */
+  .sponsors-row {
+    display: grid;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+  .row1 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1000px;
+    margin: 0 auto 1rem;
+  }
+  .row2 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    max-width: 1000px;
+    margin: 0 auto 1rem;
+  }
+
+  /* Sponsor items + bubble */
+  .sponsor-item {
+    width: 100%;
+    transition: transform 0.2s ease;
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+  }
+  .sponsor-item:hover {
+    transform: scale(1.01);
+  }
+
+  .sponsor-bubble {
+    position: relative;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;   /* ensures vertical center */
+    justify-content: center;
+    background: rgba(19, 21, 26, 0.5);
+    transition: all 0.3s ease;
+    z-index: 5;
+    margin: 0 0.5rem;
+    width: 100%;
+    max-width: 220px;
+    padding: 0.75rem;
+  }
+  .sponsor-bubble::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 0.75rem;
+    background: rgba(19, 21, 26, 0.7);
+    backdrop-filter: blur(12px);
+    z-index: -1;
+  }
+  .sponsor-item:hover .sponsor-bubble::after {
+    backdrop-filter: blur(24px);
+  }
+
+  /* Images (force block display + consistent max-height) */
+  .sponsor-item img {
+    display: block;          /* remove default inline spacing */
+    margin: 0 auto;          /* horizontal center if narrower than container */
+    max-height: 60px;        /* unify logo size */
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+    object-fit: contain;
+  }
+  .sponsor-item img:hover {
+    opacity: 1;
+  }
+
+  /* Responsiveness */
+  @media (max-width: 768px) {
     .scramble-wrapper {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 3;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+      display: none;
     }
-
-    .scramble-wrapper[style*="opacity: 0"] {
-        transition: opacity 1s ease;
+    .sponsors-row {
+      gap: 1rem;
+      margin-bottom: 0;
     }
-
-    .sponsors-section {
-        position: relative;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 0 1rem;
+    .row1, .row2 {
+      grid-template-columns: 1fr;
+      max-width: 300px;
+      margin: 0 auto;
     }
-
-    .sponsors-content {
-        position: relative;
-    }
+    .row1 { margin-bottom: 1rem; }
 
     .sponsors-title {
-        text-align: center;
-        color: white;
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        font-weight: bold;
-        font-family: monospace;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
     }
-
-    .sponsors-row {
-      display: grid;
-      gap: 2rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-      width: 100%;
-    }
-
-    /* 
-      If you want different columns in each row, you can still
-      keep these row-specific classes, but keep the bubble
-      styles in one place.
-    */
-    .row1 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      max-width: 1000px;
-      margin: 0 auto 1rem;
-    }
-
-    .row2 {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      max-width: 1000px;
-      margin: 0 auto 1rem;
-    }
-
-    /* 
-      A single .sponsor-bubble rule for shared styling.
-      Adjust padding/max-width as needed to get the look you want.
-    */
-
-    
     .sponsor-bubble {
-      position: relative;
-      border-radius: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(19, 21, 26, 0.5);
-      transition: all 0.3s ease;
-      z-index: 5;
-      margin: 0 0.5rem;
-      width: 100%;
-      max-width: 220px;       /* <-- you can change this */
-      padding: 0.75rem;       /* <-- unify padding here */
+      max-width: 220px;
+      padding: 1.25rem;
+      margin: 0;
+      min-height: 70px;
     }
-
-    .sponsor-bubble::after {
-      position: absolute;
-      inset: 0;
-      border-radius: 0.75rem;
-      background: rgba(19, 21, 26, 0.7);
-      backdrop-filter: blur(12px);
-      z-index: -1;
-    }
-
-    .sponsor-item:hover .sponsor-bubble::after {
-      backdrop-filter: blur(24px);
-    }
-
     .sponsor-item {
-        width: 100%;
-        transition: transform 0.2s ease;
-        position: relative; 
-        z-index: 5; 
-        pointer-events: auto;
-        display: flex;  
-        justify-content: center;
+      margin: 0 auto;
+      height: auto;
     }
-
-    .sponsor-item a {
-        display: block;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        z-index: 4;
-        mix-blend-mode: normal;
-        pointer-events: auto;
-    }
-
     .sponsor-item img {
-        width: 100%;
-        height: auto;
-        filter: brightness(0) invert(1);
-        opacity: 0.9;
-        transition: opacity 0.2s ease;
-        pointer-events: auto;
-        object-fit: contain;
+      max-width: 180px;
+      margin: 0;
     }
+  }
 
-    .sponsor-item:hover {
-        transform: scale(1.01);
+  @media (max-width: 640px) {
+    .gradient-top,
+    .gradient-bottom {
+      height: 100px;
     }
-
-    .sponsor-item img:hover {
-        opacity: 1;
-    }
-
-    @media (max-width: 768px) {
-        .scramble-wrapper {
-            display: none;
-        }
-
-        .sponsors-row {
-            margin-bottom: 0;
-            gap: 1rem;
-        }
-
-        .row1, .row2 {
-            grid-template-columns: 1fr;
-            max-width: 300px;
-            gap: 1rem;
-            margin: 0 auto;
-        }
-
-        .row1 {
-            margin-bottom: 1rem;
-        }
-
-        .sponsors-title {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .row1 .sponsor-bubble,
-        .row2 .sponsor-bubble {
-            max-width: 220px;
-            padding: 1.25rem;
-            margin: 0;
-            min-height: 70px;
-            display: flex;
-            align-items: center;
-        }
-
-        .sponsor-bubble {
-            margin: 0;
-        }
-
-        .sponsor-item {
-            margin: 0 auto;
-            height: auto;
-        }
-
-        .sponsor-item img {
-            width: 100%;
-            height: auto;
-            max-width: 180px;
-            margin: 0;
-            object-fit: contain;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .gradient-top,
-        .gradient-bottom {
-            height: 100px;
-        }
-    }
+  }
 </style>

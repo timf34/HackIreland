@@ -6,7 +6,7 @@ const links = [
     {href: '/#about', text: '/about'},
     {href: '/#sponsors', text: '/sponsors'},
     {href: '/#faq', text: '/faq'},
-    {href: '#', text: '/apply', isApply: true},
+    {href: 'https://docs.google.com/forms/d/e/1FAIpQLSexruxWttPcmK4ojw2-tjN6i2XH4Ku0y0wY1_Bh3KqHLEE_DA/viewform', text: '/apply', isApply: true, isExternal: true},
 ];
 
 const currentPath = Astro.url.pathname;
@@ -32,7 +32,8 @@ const currentPath = Astro.url.pathname;
                                     'text-white !underline': currentPath === link.href
                                 }
                             ]}
-                            onclick={link.isApply ? 'window.openModal(); return false;' : undefined}
+                            target={link.isExternal ? "_blank" : undefined}
+                            rel={link.isExternal ? "noopener noreferrer" : undefined}
                     >
                         <ScrambleText
                                 text={link.text || link.href}

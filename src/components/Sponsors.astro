@@ -99,7 +99,7 @@ import { ScrambleHoverEffect } from "./ScrambleHoverEffect";
     });
 
     // 2) Smooth fading near edges, but only track mouse inside .sponsors-wrapper
-    sponsorWrapper.addEventListener('mousemove', (e) => {
+    sponsorWrapper.addEventListener('mousemove', (e: MouseEvent) => {
       if (isHoveringSponsor) return;
 
       const rect = sponsorWrapper.getBoundingClientRect();

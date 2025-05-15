@@ -15,162 +15,171 @@
     }
 </style>
 
-<script>
-    class GameOfLife {
-        private canvas: HTMLCanvasElement;
-        private ctx: CanvasRenderingContext2D;
-        private cellSize: number;
-        private cols: number;
-        private rows: number;
-        private grid: boolean[][];
-        private lastUpdate: number;
-        private updateInterval: number;
+<script lang="ts" is:inline>
+  /* ─────────────────────────────────────────────
+     Game-of-Life engine (unchanged)
+  ───────────────────────────────────────────── */
+  class GameOfLife {
+    canvas;
+    ctx;
+    cellSize = 50;
+    cols = 0;
+    rows = 0;
+    grid = [];
+    lastUpdate = 0;
+    updateInterval = 200;      // ms between generations
 
-        constructor(canvas: HTMLCanvasElement) {
-            this.canvas = canvas;
-            const context = canvas.getContext('2d');
-            if (!context) throw new Error('Could not get canvas context');
-            this.ctx = context;
-            this.cellSize = 50;
-            this.cols = 0;
-            this.rows = 0;
-            this.grid = [];
-            this.lastUpdate = 0;
-            this.updateInterval = 200; // Update every 200ms (adjust this value to change speed)
+    constructor(canvas) {
+      this.canvas = canvas;
+      const context = canvas.getContext('2d');
+      if (!context) throw new Error('Could not get canvas context');
+      this.ctx = context;
 
-            this.resize();
-            this.animate = this.animate.bind(this);
-            requestAnimationFrame(this.animate);
+      this.resize();
+      this.animate = this.animate.bind(this);
+      requestAnimationFrame(this.animate);
 
-            window.addEventListener('resize', () => this.resize());
-        }
-
-        private initializeGrid(): void {
-            // First create an empty grid
-            this.grid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(false));
-
-            // Add random "soup" with controlled density
-            const density = 0.3; // 30% initial fill rate
-            for (let x = 0; x < this.rows; x++) {
-                for (let y = 0; y < this.cols; y++) {
-                    if (Math.random() < density) {
-                        this.grid[x][y] = true;
-                    }
-                }
-            }
-
-            // Add some common Game of Life patterns at random positions
-            const patterns = [
-                // Glider
-                [[0,1,0], [0,0,1], [1,1,1]],
-
-                // Blinker
-                [[1,1,1]],
-
-                // Block
-                [[1,1], [1,1]],
-
-                // Beehive
-                [[0,1,1,0], [1,0,0,1], [0,1,1,0]],
-
-                // Loaf
-                [[0,1,1,0], [1,0,0,1], [0,1,0,1], [0,0,1,0]]
-            ];
-
-            // Add several patterns at random positions
-            for (let i = 0; i < 5; i++) {
-                const pattern = patterns[Math.floor(Math.random() * patterns.length)];
-                const x = Math.floor(Math.random() * (this.rows - pattern.length));
-                const y = Math.floor(Math.random() * (this.cols - pattern[0].length));
-
-                this.addPattern(pattern, x, y);
-            }
-        }
-
-        private addPattern(pattern: number[][], startX: number, startY: number): void {
-            for (let x = 0; x < pattern.length; x++) {
-                for (let y = 0; y < pattern[x].length; y++) {
-                    if (pattern[x][y] === 1) {
-                        const newX = (startX + x) % this.rows;
-                        const newY = (startY + y) % this.cols;
-                        this.grid[newX][newY] = true;
-                    }
-                }
-            }
-        }
-
-        resize(): void {
-            this.canvas.width = window.innerWidth;
-            this.canvas.height = window.innerHeight;
-            this.cols = Math.ceil(this.canvas.width / this.cellSize);
-            this.rows = Math.ceil(this.canvas.height / this.cellSize);
-
-            this.initializeGrid(); // Use our new initialization method
-        }
-
-        countNeighbors(x: number, y: number): number {
-            let count = 0;
-            for (let i = -1; i <= 1; i++) {
-                for (let j = -1; j <= 1; j++) {
-                    if (i === 0 && j === 0) continue;
-                    const newX = (x + i + this.rows) % this.rows;
-                    const newY = (y + j + this.cols) % this.cols;
-                    count += this.grid[newX][newY] ? 1 : 0;
-                }
-            }
-            return count;
-        }
-
-        update(): void {
-            const newGrid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(false));
-
-            for (let x = 0; x < this.rows; x++) {
-                for (let y = 0; y < this.cols; y++) {
-                    const neighbors = this.countNeighbors(x, y);
-                    if (this.grid[x][y]) {
-                        newGrid[x][y] = neighbors === 2 || neighbors === 3;
-                    } else {
-                        newGrid[x][y] = neighbors === 3;
-                    }
-                }
-            }
-
-            this.grid = newGrid;
-        }
-
-        draw(): void {
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
-
-            for (let x = 0; x < this.rows; x++) {
-                for (let y = 0; y < this.cols; y++) {
-                    if (this.grid[x][y]) {
-                        this.ctx.fillRect(
-                            y * this.cellSize,
-                            x * this.cellSize,
-                            this.cellSize - 1,
-                            this.cellSize - 1
-                        );
-                    }
-                }
-            }
-        }
-
-        animate(timestamp: number): void {
-            // Update the game state at fixed intervals
-            if (timestamp - this.lastUpdate >= this.updateInterval) {
-                this.update();
-                this.lastUpdate = timestamp;
-            }
-
-            // Draw every frame for smooth rendering
-            this.draw();
-            requestAnimationFrame(this.animate);
-        }
+      window.addEventListener('resize', () => this.resize());
     }
 
-    window.addEventListener('load', () => {
-        const canvas = document.getElementById('gameOfLife') as HTMLCanvasElement;
-        if (canvas) new GameOfLife(canvas);
-    });
+    initializeGrid() {
+      // First create an empty grid
+      this.grid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(false));
+
+      // Add random "soup" with controlled density
+      const density = 0.3; // 30% initial fill rate
+      for (let x = 0; x < this.rows; x++) {
+        for (let y = 0; y < this.cols; y++) {
+          if (Math.random() < density) {
+            this.grid[x][y] = true;
+          }
+        }
+      }
+
+      // Add some common Game of Life patterns at random positions
+      const patterns = [
+        // Glider
+        [[0,1,0], [0,0,1], [1,1,1]],
+
+        // Blinker
+        [[1,1,1]],
+
+        // Block
+        [[1,1], [1,1]],
+
+        // Beehive
+        [[0,1,1,0], [1,0,0,1], [0,1,1,0]],
+
+        // Loaf
+        [[0,1,1,0], [1,0,0,1], [0,1,0,1], [0,0,1,0]]
+      ];
+
+      // Add several patterns at random positions
+      for (let i = 0; i < 5; i++) {
+        const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+        const x = Math.floor(Math.random() * (this.rows - pattern.length));
+        const y = Math.floor(Math.random() * (this.cols - pattern[0].length));
+
+        this.addPattern(pattern, x, y);
+      }
+    }
+
+    addPattern(pattern, startX, startY) {
+      for (let x = 0; x < pattern.length; x++) {
+        for (let y = 0; y < pattern[x].length; y++) {
+          if (pattern[x][y] === 1) {
+            const newX = (startX + x) % this.rows;
+            const newY = (startY + y) % this.cols;
+            this.grid[newX][newY] = true;
+          }
+        }
+      }
+    }
+
+    resize() {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+      this.cols = Math.ceil(this.canvas.width / this.cellSize);
+      this.rows = Math.ceil(this.canvas.height / this.cellSize);
+
+      this.initializeGrid(); // Use our new initialization method
+    }
+
+    countNeighbors(x, y) {
+      let count = 0;
+      for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          if (i === 0 && j === 0) continue;
+          const newX = (x + i + this.rows) % this.rows;
+          const newY = (y + j + this.cols) % this.cols;
+          count += this.grid[newX][newY] ? 1 : 0;
+        }
+      }
+      return count;
+    }
+
+    update() {
+      const newGrid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(false));
+
+      for (let x = 0; x < this.rows; x++) {
+        for (let y = 0; y < this.cols; y++) {
+          const neighbors = this.countNeighbors(x, y);
+          if (this.grid[x][y]) {
+            newGrid[x][y] = neighbors === 2 || neighbors === 3;
+          } else {
+            newGrid[x][y] = neighbors === 3;
+          }
+        }
+      }
+
+      this.grid = newGrid;
+    }
+
+    draw() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+
+      for (let x = 0; x < this.rows; x++) {
+        for (let y = 0; y < this.cols; y++) {
+          if (this.grid[x][y]) {
+            this.ctx.fillRect(
+              y * this.cellSize,
+              x * this.cellSize,
+              this.cellSize - 1,
+              this.cellSize - 1
+            );
+          }
+        }
+      }
+    }
+
+    animate(timestamp) {
+      // Update the game state at fixed intervals
+      if (timestamp - this.lastUpdate >= this.updateInterval) {
+        this.update();
+        this.lastUpdate = timestamp;
+      }
+
+      // Draw every frame for smooth rendering
+      this.draw();
+      requestAnimationFrame(this.animate);
+    }
+  }
+  /* ─────────────────────────────────────────────
+     Boot the animation
+  ───────────────────────────────────────────── */
+
+  const boot = () => {
+    const canvas = document.getElementById('gameOfLife');
+    if (canvas) new GameOfLife(canvas);
+  };
+
+  // If the HTML is already parsed/run (production case) start immediately
+  if (document.readyState === 'complete') boot();
+
+  // Otherwise start as soon as the DOM is ready
+  window.addEventListener('DOMContentLoaded', boot);
+
+  // Also restart after Astro client-side view transitions
+  document.addEventListener('astro:page-load', boot);
 </script>

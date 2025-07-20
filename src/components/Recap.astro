@@ -1,0 +1,43 @@
+---
+/* Recap.astro */
+const metrics = [
+  { label: 'Students',  value: '150+' },
+  { label: 'Projects',  value: '40'   },
+  { label: 'Hours',     value: '30'   },
+  { label: 'Prize Pool',value: '€25k' },
+];
+---
+
+<section id="recap" class="recap">
+  <h2 class="title">Hack Ireland 2025 — Wrapped 🚀</h2>
+
+  <img
+    src="/recap.png"
+    alt="All 150 participants and organisers gathered at Dogpatch Labs"
+    class="photo"
+    loading="lazy"
+  />
+
+  <ul class="metrics">
+    {metrics.map(m => (
+      <li><span class="value">{m.value}</span><span class="label">{m.label}</span></li>
+    ))}
+  </ul>
+
+  <p class="blurb">
+    Thank you to every student, mentor and sponsor who made the first edition unforgettable.
+    <br/>
+    <strong>Want to help run an even bigger 2026?</strong>  
+    Team applications open <em>soon</em>—stay tuned!
+  </p>
+</section>
+
+<style>
+  .recap   { margin: 4rem auto 3rem; max-width: 900px; text-align: center; }
+  .title   { font-family: monospace; font-size: 2.4rem; font-weight: 700; color: white; }
+  .photo   { width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; box-shadow: 0 0 30px rgba(0,0,0,.4); }
+  .metrics { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
+  .value   { display: block; font-size: 1.6rem; font-weight: 700; color: rgb(167 139 250); }
+  .label   { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.75); }
+  .blurb   { color: rgba(255,255,255,.85); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+</style>

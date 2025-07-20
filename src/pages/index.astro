@@ -6,6 +6,7 @@ import Countdown from '../components/Countdown.astro';
 import Sponsors from '../components/Sponsors.astro';
 import FAQ from '../components/FAQ.astro';
 import ApplyNow from '../components/ApplyNow.astro';
+import Recap from '../components/Recap.astro';
 // import HackerTerminal from '../components/HackerTerminal.astro';
 ---
 
@@ -40,11 +41,15 @@ import ApplyNow from '../components/ApplyNow.astro';
 					client:load
 				/>
 			</p>
-			<Countdown />
-			<ApplyNow />
+			<!-- <Countdown />
+			<ApplyNow /> -->
 		</div>
 
 		<!-- <HackerTerminal /> -->
+
+		<div id="recap">
+			<Recap />
+		</div>
 
 		<ul role="list" class="link-card-grid">
 			<div class="card-grid" id="about">

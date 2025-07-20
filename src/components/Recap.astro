@@ -1,43 +1,115 @@
 ---
-/* Recap.astro */
+import Card from './Card.astro';
+
+/* Quick stats to show off the first edition */
 const metrics = [
-  { label: 'Students',  value: '150+' },
-  { label: 'Projects',  value: '40'   },
-  { label: 'Hours',     value: '30'   },
-  { label: 'Prize Pool',value: '€25k' },
+  { label: 'Students',   value: '150+' },
+  { label: 'Projects',   value: '40'   },
+  { label: 'Hours',      value: '30'   },
+  { label: 'Prize&nbsp;Pool', value: '€25k' },
 ];
 ---
 
-<section id="recap" class="recap">
-  <h2 class="title">Hack Ireland 2025 — Wrapped 🚀</h2>
+<section id="recap" class="recap-wrapper">
+  <Card title="Hack Ireland 2025 — Wrapped 🚀">
+    {/* Event photo */}
+    <img
+      src="/recap.png"
+      alt="Hack Ireland organisers and participants gathered in Dogpatch Labs"
+      class="recap-photo"
+      loading="lazy"
+    />
 
-  <img
-    src="/recap.png"
-    alt="All 150 participants and organisers gathered at Dogpatch Labs"
-    class="photo"
-    loading="lazy"
-  />
+    {/* 4‑up metrics */}
+    <ul class="metrics">
+      {metrics.map(({ label, value }) => (
+        <li class="metric">
+          <span class="metric-value" set:html={value} />
+          <span class="metric-label" set:html={label} />
+        </li>
+      ))}
+    </ul>
 
-  <ul class="metrics">
-    {metrics.map(m => (
-      <li><span class="value">{m.value}</span><span class="label">{m.label}</span></li>
-    ))}
-  </ul>
-
-  <p class="blurb">
-    Thank you to every student, mentor and sponsor who made the first edition unforgettable.
-    <br/>
-    <strong>Want to help run an even bigger 2026?</strong>  
-    Team applications open <em>soon</em>—stay tuned!
-  </p>
+    {/* Blurb + next‑team teaser */}
+    <p class="blurb">
+      Thirty electrifying hours, <strong>150&nbsp;students</strong> and more midnight commits
+      than we could count. Thank you to everyone who built, mentored and sponsored the
+      very first Hack Ireland.<br /><br />
+      <em>Want to help run an even bigger 2026?</em>
+      Team applications open <strong>soon</strong>—watch this space!
+    </p>
+  </Card>
 </section>
 
 <style>
-  .recap   { margin: 4rem auto 3rem; max-width: 900px; text-align: center; }
-  .title   { font-family: monospace; font-size: 2.4rem; font-weight: 700; color: white; }
-  .photo   { width: 100%; border-radius: 0.75rem; margin: 1.5rem 0; box-shadow: 0 0 30px rgba(0,0,0,.4); }
-  .metrics { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin: 0 0 1.5rem; }
-  .value   { display: block; font-size: 1.6rem; font-weight: 700; color: rgb(167 139 250); }
-  .label   { font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.75); }
-  .blurb   { color: rgba(255,255,255,.85); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+  /* ——— wrapper ——— */
+  .recap-wrapper {
+    max-width: 800px;
+    margin: 3rem auto 2rem;
+    padding: 0 0.5rem;
+  }
+
+  /* ——— make THIS card pop a little ——— */
+  #recap .card {
+    border: 1px solid rgba(167,139,250,.35);          /* thin purple outline   */
+    box-shadow: 0 0 20px rgba(167,139,250,.15) inset; /* faint inner glow      */
+  }
+
+  /* ——— centred title ——— */
+  #recap h2 {
+    text-align: center;
+  }
+
+  /* ——— photo tweaks ——— */
+  .recap-photo {
+    width: 100%;
+    max-width: 550px;          /* <‑‑ smaller */
+    border-radius: 0.75rem;
+    object-fit: cover;
+    margin: 0.75rem auto 1.25rem; /* auto centres */
+    transition: box-shadow .3s ease, transform .3s ease;
+    display: block;
+  }
+  .recap-photo:hover {
+    box-shadow: 0 0 30px rgba(136,58,234,.45);
+    transform: translateY(-2px);
+  }
+
+  /* ——— metrics grid ——— */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+    gap: 1rem 2rem;
+    margin: 0 0 1.25rem;
+    list-style: none;
+    padding: 0;
+  }
+  .metric { text-align: center; }
+  .metric-value {
+    display: block;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: rgb(167 139 250);
+    line-height: 1.2;
+  }
+  .metric-label {
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: rgba(255,255,255,.75);
+  }
+
+  /* ——— blurb ——— */
+  .blurb {
+    color: rgba(255,255,255,.85);
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;   /* looks nicer with centred title */
+  }
+
+  /* ——— responsive tweaks ——— */
+  @media (max-width: 640px) {
+    .metric-value { font-size: 1.3rem; }
+    .recap-photo  { max-width: 100%; }
+  }
 </style>
